@@ -1,7 +1,7 @@
 files = ['words5.txt', 'words6.txt', 'words7.txt', 'words8.txt']
 for file in files:
     try:
-        with open(file, 'r') as inp:
+        with open(file, 'r', encoding = 'utf-8') as inp:
             resultString = ''
             k = 0
             for line in inp.readlines():
@@ -10,7 +10,7 @@ for file in files:
 
         resultString = str(k) + '\n' + resultString
         
-        with open(file, 'w') as out:
+        with open(file, 'w', encoding = 'utf-8') as out:
             out.write(resultString)
         print('Данные успешно перезаписаны в файл!')
             
