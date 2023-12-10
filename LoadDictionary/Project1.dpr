@@ -29,7 +29,7 @@ begin
     AssignFile(fileVar, files[i]);
     Reset(fileVar);
 
-    // Чтение первой строки, где хранится число слов, приведение ее в тип integer и установка длины динамического массива
+    // Чтение первой строки, где хранится количество слов, приведение ее в тип integer и установка длины динамического массива
     readln(fileVar, line);
     count := StrToInt(line);
     SetLength(words[i], count);
