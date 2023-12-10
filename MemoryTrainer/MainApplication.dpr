@@ -557,5 +557,3 @@ begin
   StartGame;
 
 end.
-
-// debug section
