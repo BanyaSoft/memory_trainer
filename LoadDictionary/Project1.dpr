@@ -52,7 +52,6 @@ var
 begin
   LoadDictionary(words);
   // writeln('The path of the current executable is: ' + ExtractFilePath(ParamStr(0)));
-
   readln;
 
 end.
