@@ -91,7 +91,7 @@ begin
     for i := 1 to Length(checkStr) do
     begin
       number := Ord(checkStr[i]);
-      if not (((number >= 1040) and (number <= 1071)) or (number = 32)) then
+      if not(((number >= 1040) and (number <= 1071)) or (number = 32)) then
         flag := false;
     end;
     if not flag then
@@ -203,8 +203,7 @@ function IsValidS5(stageArr: TSetOfWords; numOfWords: byte;
 const
   space = ' ';
 var
-  i: integer;
-  temp, checkString: string;
+  checkString: string;
 begin
   checkString := String.Join(space, stageArr, 0, numOfWords);
   checkString := ReverseString(checkString);
@@ -250,7 +249,7 @@ begin
         end;
       until IsValid(inputStr) = $00;
 
-      if IsValidS1(stageStr, inputStr) = False then
+      if IsValidS1(stageStr, inputStr) = false then
       begin
         writeln('ÎÒÂÅÒ ÍÅÂÅĞÍÛÉ! Ïîïğîáóéòå åùå ğàç.');
         counter := 0;
@@ -267,7 +266,7 @@ begin
       readln;
       ClearScreen();
     end;
-    Inc(level);
+    inc(level);
   end;
   writeln('Âû ïğîøëè İòàï 1! Ïîçäğàâëÿåì!');
   writeln('Íàæìèòå Enter, ÷òîáû ïåğåéòè ê ñëåäóşùåìó ıòàïó.');
@@ -299,7 +298,8 @@ begin
       sleep(5000);
       ClearScreen();
 
-      writeln('İòàï 2. Óğîâåíü ', level, #13#10, 'Ââåäèòå ñëîâa â ëşáîì ïîğÿäêå:');
+      writeln('İòàï 2. Óğîâåíü ', level, #13#10,
+        'Ââåäèòå ñëîâa â ëşáîì ïîğÿäêå:');
 
       repeat
         readln(inputStr);
@@ -313,7 +313,7 @@ begin
         end;
       until IsValid(inputStr) = $00;
 
-      if IsValidS2(stageArr, level + 4, inputStr) = False then
+      if IsValidS2(stageArr, level + 4, inputStr) = false then
       begin
         writeln('ÎÒÂÅÒ ÍÅÂÅĞÍÛÉ! Ïîïğîáóéòå åùå ğàç.');
         counter := 0;
@@ -331,7 +331,7 @@ begin
       ClearScreen();
     end;
 
-    Inc(level);
+    inc(level);
   end;
   writeln('Âû ïğîøëè İòàï 2! Ïîçäğàâëÿåì!');
   writeln('Íàæìèòå Enter, ÷òîáû ïåğåéòè ê ñëåäóşùåìó ıòàïó.');
@@ -363,7 +363,8 @@ begin
       sleep(5000);
       ClearScreen();
 
-      writeln('İòàï 3. Óğîâåíü ', level, #13#10, 'Ââåäèòå ñëîâa â ñòğîãîì ïîğÿäêå:');
+      writeln('İòàï 3. Óğîâåíü ', level, #13#10,
+        'Ââåäèòå ñëîâa â ñòğîãîì ïîğÿäêå:');
 
       repeat
         readln(inputStr);
@@ -377,7 +378,7 @@ begin
         end;
       until IsValid(inputStr) = $00;
 
-      if IsValidS3(stageArr, level + 4, inputStr) = False then
+      if IsValidS3(stageArr, level + 4, inputStr) = false then
       begin
         writeln('ÎÒÂÅÒ ÍÅÂÅĞÍÛÉ! Ïîïğîáóéòå åùå ğàç.');
         counter := 0;
@@ -395,7 +396,7 @@ begin
       ClearScreen();
     end;
 
-    Inc(level);
+    inc(level);
   end;
   writeln('Âû ïğîøëè İòàï 3! Ïîçäğàâëÿåì!');
   writeln('Íàæìèòå Enter, ÷òîáû ïåğåéòè ê ñëåäóşùåìó ıòàïó.');
@@ -427,7 +428,8 @@ begin
       sleep(5000);
       ClearScreen();
 
-      writeln('İòàï 4. Óğîâåíü ', level, #13#10, 'Ââåäèòå ïåğåâ¸ğíóòûå ñëîâa â ëşáîì ïîğÿäêå:');
+      writeln('İòàï 4. Óğîâåíü ', level, #13#10,
+        'Ââåäèòå ïåğåâ¸ğíóòûå ñëîâa â ëşáîì ïîğÿäêå:');
 
       repeat
         readln(inputStr);
@@ -441,7 +443,7 @@ begin
         end;
       until IsValid(inputStr) = $00;
 
-      if IsValidS4(stageArr, level + 4, inputStr) = False then
+      if IsValidS4(stageArr, level + 4, inputStr) = false then
       begin
         writeln('ÎÒÂÅÒ ÍÅÂÅĞÍÛÉ! Ïîïğîáóéòå åùå ğàç.');
         counter := 0;
@@ -459,7 +461,7 @@ begin
       ClearScreen();
     end;
 
-    Inc(level);
+    inc(level);
   end;
   writeln('Âû ïğîøëè İòàï 4! Ïîçäğàâëÿåì!');
   writeln('Íàæìèòå Enter, ÷òîáû ïåğåéòè ê ñëåäóşùåìó ıòàïó.');
@@ -491,7 +493,8 @@ begin
       sleep(5000);
       ClearScreen();
 
-      writeln('İòàï 5. Óğîâåíü ', level, #13#10, 'Ââåäèòå ïğåäëîæåíèå â îáğàòíîì ïîğÿäêå:');
+      writeln('İòàï 5. Óğîâåíü ', level, #13#10,
+        'Ââåäèòå ïğåäëîæåíèå â îáğàòíîì ïîğÿäêå:');
 
       repeat
         readln(inputStr);
@@ -505,7 +508,7 @@ begin
         end;
       until IsValid(inputStr) = $00;
 
-      if IsValidS5(stageArr, level + 4, inputStr) = False then
+      if IsValidS5(stageArr, level + 4, inputStr) = false then
       begin
         writeln('ÎÒÂÅÒ ÍÅÂÅĞÍÛÉ! Ïîïğîáóéòå åùå ğàç.');
         counter := 0;
@@ -523,7 +526,7 @@ begin
       ClearScreen();
     end;
 
-    Inc(level);
+    inc(level);
   end;
   writeln('Âû ïğîøëè İòàï 5! Ïîçäğàâëÿåì!');
   writeln('Íàæìèòå Enter, ÷òîáû ïåğåéòè ê ñëåäóşùåìó ıòàïó.');
@@ -534,7 +537,6 @@ end;
 procedure StartGame();
 var
   words: TDictionary;
-  testSet: TSetOfWords;
 begin
   writeln('Äîáğî ïîæàëîâàòü â ïğèëîæåíèå Memory Trainer!');
   writeln('Íàæìèòå Enter, ÷òîáû íà÷àòü.');
@@ -556,4 +558,4 @@ begin
 
 end.
 
-//debug section
+// debug section
