@@ -68,3 +68,4 @@ modules/
 
 # End of https://www.toptal.com/developers/gitignore/api/delphi
 *.dproj
+MemoryTrainer/MainApplication.dproj
