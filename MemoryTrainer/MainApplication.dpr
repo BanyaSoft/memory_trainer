@@ -136,20 +136,19 @@ var
   i: byte;
   flag: boolean;
 begin
-  flag := true;
   userStr := Concat(space, userStr, space);
 
-  for i := 1 to numOfWords do
+  flag := true;
+  i := 1;
+  while flag and (i <= numOfWords) do
   begin
     checkWord := stageArr[i];
     checkWord := Concat(space, checkWord, space);
     if Pos(checkWord, userStr) = 0 then
-    begin
-      flag := false;
-      break;
-    end
+      flag := false
     else
       Delete(userStr, Pos(checkWord, userStr), Length(checkWord) - 1);
+    inc(i);
   end;
   Result := flag;
 end;
@@ -182,17 +181,16 @@ begin
   userStr := Concat(space, userStr, space);
 
   flag := true;
-  for i := 1 to numOfWords do
+  i := 1;
+  while flag and (i <= numOfWords) do
   begin
     checkWord := stageArr[i];
     checkWord := Concat(space, checkWord, space);
     if Pos(checkWord, userStr) = 0 then
-    begin
-      flag := false;
-      break;
-    end
+      flag := false
     else
       Delete(userStr, Pos(checkWord, userStr), Length(checkWord) - 1);
+    inc(i);
   end;
   Result := flag;
 
@@ -543,7 +541,7 @@ begin
   readln;
   ClearScreen;
   LoadDictionary(words);
-  Stage1(words);
+  // Stage1(words);
   Stage2(words);
   Stage3(words);
   Stage4(words);
