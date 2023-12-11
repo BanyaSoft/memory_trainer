@@ -541,7 +541,7 @@ begin
   writeln('Добро пожаловать в приложение Memory Trainer!');
   writeln('Нажмите Enter, чтобы начать.');
   readln;
-  ClearScreen;
+  ClearScreen();
   LoadDictionary(words);
   Stage1(words);
   Stage2(words);
