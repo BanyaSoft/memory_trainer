@@ -6,7 +6,8 @@ for file in files:
             k = 0
 
             try:
-                first_line = inp.readline()
+                global first_line
+		first_line = inp.readline()
                 count = int(first_line)
 
             except ValueError:
