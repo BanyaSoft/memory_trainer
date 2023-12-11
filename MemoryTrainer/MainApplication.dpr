@@ -541,7 +541,7 @@ begin
   readln;
   ClearScreen;
   LoadDictionary(words);
-  // Stage1(words);
+  Stage1(words);
   Stage2(words);
   Stage3(words);
   Stage4(words);
