@@ -49,7 +49,7 @@ begin
   end;
 end;
 
-procedure ClearScreen();
+procedure ClearScreen(keepFirstLine: boolean);
 var
   ConsoleSize, NumWritten: LongWord;
   Origin: Coord;
@@ -58,9 +58,19 @@ var
 begin
   hStdOut := GetStdHandle(STD_OUTPUT_HANDLE);
   GetConsoleScreenBufferInfo(hStdOut, ScreenBufferInfo);
-  ConsoleSize := ScreenBufferInfo.dwSize.X * ScreenBufferInfo.dwSize.Y;
-  Origin.X := 0;
-  Origin.Y := 0;
+  if keepFirstLine then
+  begin
+    ConsoleSize := ScreenBufferInfo.dwSize.X * (ScreenBufferInfo.dwSize.Y - 1);
+    Origin.X := 0;
+    Origin.Y := 1;
+  end
+  else
+  begin
+    ConsoleSize := ScreenBufferInfo.dwSize.X * ScreenBufferInfo.dwSize.Y;
+    Origin.X := 0;
+    Origin.Y := 0;
+  end;
+
   FillConsoleOutputCharacter(hStdOut, ' ', ConsoleSize, Origin, NumWritten);
   FillConsoleOutputAttribute(hStdOut, ScreenBufferInfo.wAttributes, ConsoleSize,
     Origin, NumWritten);
@@ -224,16 +234,17 @@ begin
   while level <= 4 do
   begin
     counter := 0;
+    writeln('Этап 1. Уровень ', level);
+
     while counter < 3 do
     begin
       stageStr := words[level][random(Length(words[level]))];
 
-      writeln('Этап 1. Уровень ', level);
       writeln(stageStr);
       sleep(3000);
-      ClearScreen();
+      ClearScreen(true);
 
-      writeln('Этап 1. Уровень ', level, #13#10, 'Введите перевёрнутое слово:');
+      writeln('Введите перевёрнутое слово:');
 
       repeat
         readln(inputStr);
@@ -262,14 +273,17 @@ begin
 
       writeln('Нажмите Enter, чтобы продолжить.');
       readln;
-      ClearScreen();
+      ClearScreen(true);
     end;
+
     inc(level);
+    ClearScreen(false);
   end;
+
   writeln('Вы прошли Этап 1! Поздравляем!');
   writeln('Нажмите Enter, чтобы перейти к следующему этапу.');
   readln;
-  ClearScreen;
+  ClearScreen(false);
 end;
 
 procedure Stage2(words: TDictionary);
@@ -284,20 +298,20 @@ begin
   while level <= 4 do
   begin
     counter := 0;
+    writeln('Этап 2. Уровень ', level);
+
     while counter < 3 do
     begin
       stageArr := RandomArr(words, level + 4);
 
-      writeln('Этап 2. Уровень ', level);
       write(stageArr[1]);
       for var i := 2 to level + 4 do
         write(' ', stageArr[i]);
       writeln;
       sleep(5000);
-      ClearScreen();
+      ClearScreen(true);
 
-      writeln('Этап 2. Уровень ', level, #13#10,
-        'Введите словa в любом порядке:');
+      writeln('Введите словa в любом порядке:');
 
       repeat
         readln(inputStr);
@@ -326,15 +340,17 @@ begin
 
       writeln('Нажмите Enter, чтобы продолжить.');
       readln;
-      ClearScreen();
+      ClearScreen(true);
     end;
 
     inc(level);
+    ClearScreen(false);
   end;
+
   writeln('Вы прошли Этап 2! Поздравляем!');
   writeln('Нажмите Enter, чтобы перейти к следующему этапу.');
   readln;
-  ClearScreen;
+  ClearScreen(false);
 end;
 
 procedure Stage3(words: TDictionary);
@@ -349,20 +365,20 @@ begin
   while level <= 4 do
   begin
     counter := 0;
+    writeln('Этап 3. Уровень ', level);
+
     while counter < 3 do
     begin
       stageArr := RandomArr(words, level + 4);
 
-      writeln('Этап 3. Уровень ', level);
       write(stageArr[1]);
       for var i := 2 to level + 4 do
         write(' ', stageArr[i]);
       writeln;
       sleep(5000);
-      ClearScreen();
+      ClearScreen(true);
 
-      writeln('Этап 3. Уровень ', level, #13#10,
-        'Введите словa в строгом порядке:');
+      writeln('Введите словa в строгом порядке:');
 
       repeat
         readln(inputStr);
@@ -391,15 +407,17 @@ begin
 
       writeln('Нажмите Enter, чтобы продолжить.');
       readln;
-      ClearScreen();
+      ClearScreen(true);
     end;
 
     inc(level);
+    ClearScreen(false);
   end;
+
   writeln('Вы прошли Этап 3! Поздравляем!');
   writeln('Нажмите Enter, чтобы перейти к следующему этапу.');
   readln;
-  ClearScreen;
+  ClearScreen(false);
 end;
 
 procedure Stage4(words: TDictionary);
@@ -414,20 +432,20 @@ begin
   while level <= 4 do
   begin
     counter := 0;
+    writeln('Этап 4. Уровень ', level);
+
     while counter < 3 do
     begin
       stageArr := RandomArr(words, level + 4);
 
-      writeln('Этап 4. Уровень ', level);
       write(stageArr[1]);
       for var i := 2 to level + 4 do
         write(' ', stageArr[i]);
       writeln;
       sleep(5000);
-      ClearScreen();
+      ClearScreen(true);
 
-      writeln('Этап 4. Уровень ', level, #13#10,
-        'Введите перевёрнутые словa в любом порядке:');
+      writeln('Введите перевёрнутые словa в любом порядке:');
 
       repeat
         readln(inputStr);
@@ -456,15 +474,17 @@ begin
 
       writeln('Нажмите Enter, чтобы продолжить.');
       readln;
-      ClearScreen();
+      ClearScreen(true);
     end;
 
     inc(level);
+    ClearScreen(false);
   end;
+
   writeln('Вы прошли Этап 4! Поздравляем!');
   writeln('Нажмите Enter, чтобы перейти к следующему этапу.');
   readln;
-  ClearScreen;
+  ClearScreen(false);
 end;
 
 procedure Stage5(words: TDictionary);
@@ -479,20 +499,20 @@ begin
   while level <= 4 do
   begin
     counter := 0;
+    writeln('Этап 5. Уровень ', level);
+
     while counter < 3 do
     begin
       stageArr := RandomArr(words, level + 4);
 
-      writeln('Этап 5. Уровень ', level);
       write(stageArr[1]);
       for var i := 2 to level + 4 do
         write(' ', stageArr[i]);
       writeln;
       sleep(5000);
-      ClearScreen();
+      ClearScreen(true);
 
-      writeln('Этап 5. Уровень ', level, #13#10,
-        'Введите предложение в обратном порядке:');
+      writeln('Введите предложение в обратном порядке:');
 
       repeat
         readln(inputStr);
@@ -521,15 +541,17 @@ begin
 
       writeln('Нажмите Enter, чтобы продолжить.');
       readln;
-      ClearScreen();
+      ClearScreen(true);
     end;
 
     inc(level);
+    ClearScreen(false);
   end;
+
   writeln('Вы прошли Этап 5! Поздравляем!');
   writeln('Нажмите Enter, чтобы перейти к следующему этапу.');
   readln;
-  ClearScreen;
+  ClearScreen(false);
 end;
 
 procedure StartGame();
@@ -539,7 +561,7 @@ begin
   writeln('Добро пожаловать в приложение Memory Trainer!');
   writeln('Нажмите Enter, чтобы начать.');
   readln;
-  ClearScreen;
+  ClearScreen(false);
   LoadDictionary(words);
   Stage1(words);
   Stage2(words);
