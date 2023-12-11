@@ -58,22 +58,60 @@ var
 begin
   hStdOut := GetStdHandle(STD_OUTPUT_HANDLE);
   GetConsoleScreenBufferInfo(hStdOut, ScreenBufferInfo);
+
+  Origin.X := 0;
   if keepFirstLine then
   begin
     ConsoleSize := ScreenBufferInfo.dwSize.X * (ScreenBufferInfo.dwSize.Y - 1);
-    Origin.X := 0;
     Origin.Y := 1;
   end
   else
   begin
     ConsoleSize := ScreenBufferInfo.dwSize.X * ScreenBufferInfo.dwSize.Y;
-    Origin.X := 0;
     Origin.Y := 0;
   end;
 
   FillConsoleOutputCharacter(hStdOut, ' ', ConsoleSize, Origin, NumWritten);
   FillConsoleOutputAttribute(hStdOut, ScreenBufferInfo.wAttributes, ConsoleSize,
     Origin, NumWritten);
+  SetConsoleCursorPosition(hStdOut, Origin);
+end;
+
+procedure DeleteOneLine(relPosition: integer);
+var
+  ConsoleSize, NumWritten: LongWord;
+  Origin, Starting: Coord;
+  ScreenBufferInfo: CONSOLE_SCREEN_BUFFER_INFO;
+  hStdOut: THandle;
+begin
+  hStdOut := GetStdHandle(STD_OUTPUT_HANDLE);
+  GetConsoleScreenBufferInfo(hStdOut, ScreenBufferInfo);
+
+  Starting.X := ScreenBufferInfo.dwCursorPosition.X;
+  Starting.Y := ScreenBufferInfo.dwCursorPosition.Y;
+
+  ConsoleSize := ScreenBufferInfo.dwSize.X;
+  Origin.X := 0;
+  Origin.Y := ScreenBufferInfo.dwCursorPosition.Y + relPosition;
+
+  FillConsoleOutputCharacter(hStdOut, ' ', ConsoleSize, Origin, NumWritten);
+  FillConsoleOutputAttribute(hStdOut, ScreenBufferInfo.wAttributes, ConsoleSize,
+    Origin, NumWritten);
+  SetConsoleCursorPosition(hStdOut, Starting);
+end;
+
+procedure MoveCursor(relPosition: integer);
+var
+  Origin: Coord;
+  ScreenBufferInfo: CONSOLE_SCREEN_BUFFER_INFO;
+  hStdOut: THandle;
+begin
+  hStdOut := GetStdHandle(STD_OUTPUT_HANDLE);
+  GetConsoleScreenBufferInfo(hStdOut, ScreenBufferInfo);
+
+  Origin.X := 0;
+  Origin.Y := ScreenBufferInfo.dwCursorPosition.Y + relPosition;
+
   SetConsoleCursorPosition(hStdOut, Origin);
 end;
 
@@ -250,11 +288,20 @@ begin
         readln(inputStr);
         TrimString(inputStr);
         inputStr := AnsiUpperCase(inputStr);
+        DeleteOneLine(0);
         case IsValid(inputStr) of
           $01:
-            writeln('Пустая строка. Повторите ввод.');
+            begin
+              writeln('Пустая строка. Повторите ввод.');
+              DeleteOneLine(-2);
+              MoveCursor(-2);
+            end;
           $10:
-            writeln('Неправильный язык. Повторите ввод.');
+            begin
+              writeln('Неправильный язык. Повторите ввод.');
+              DeleteOneLine(-2);
+              MoveCursor(-2);
+            end;
         end;
       until IsValid(inputStr) = $00;
 
@@ -317,11 +364,20 @@ begin
         readln(inputStr);
         TrimString(inputStr);
         inputStr := AnsiUpperCase(inputStr);
+        DeleteOneLine(0);
         case IsValid(inputStr) of
           $01:
-            writeln('Пустая строка. Повторите ввод.');
+            begin
+              writeln('Пустая строка. Повторите ввод.');
+              DeleteOneLine(-2);
+              MoveCursor(-2);
+            end;
           $10:
-            writeln('Неправильный язык. Повторите ввод.');
+            begin
+              writeln('Неправильный язык. Повторите ввод.');
+              DeleteOneLine(-2);
+              MoveCursor(-2);
+            end;
         end;
       until IsValid(inputStr) = $00;
 
@@ -384,11 +440,20 @@ begin
         readln(inputStr);
         TrimString(inputStr);
         inputStr := AnsiUpperCase(inputStr);
+        DeleteOneLine(0);
         case IsValid(inputStr) of
           $01:
-            writeln('Пустая строка. Повторите ввод.');
+            begin
+              writeln('Пустая строка. Повторите ввод.');
+              DeleteOneLine(-2);
+              MoveCursor(-2);
+            end;
           $10:
-            writeln('Неправильный язык. Повторите ввод.');
+            begin
+              writeln('Неправильный язык. Повторите ввод.');
+              DeleteOneLine(-2);
+              MoveCursor(-2);
+            end;
         end;
       until IsValid(inputStr) = $00;
 
@@ -451,11 +516,20 @@ begin
         readln(inputStr);
         TrimString(inputStr);
         inputStr := AnsiUpperCase(inputStr);
+        DeleteOneLine(0);
         case IsValid(inputStr) of
           $01:
-            writeln('Пустая строка. Повторите ввод.');
+            begin
+              writeln('Пустая строка. Повторите ввод.');
+              DeleteOneLine(-2);
+              MoveCursor(-2);
+            end;
           $10:
-            writeln('Неправильный язык. Повторите ввод.');
+            begin
+              writeln('Неправильный язык. Повторите ввод.');
+              DeleteOneLine(-2);
+              MoveCursor(-2);
+            end;
         end;
       until IsValid(inputStr) = $00;
 
@@ -518,11 +592,20 @@ begin
         readln(inputStr);
         TrimString(inputStr);
         inputStr := AnsiUpperCase(inputStr);
+        DeleteOneLine(0);
         case IsValid(inputStr) of
           $01:
-            writeln('Пустая строка. Повторите ввод.');
+            begin
+              writeln('Пустая строка. Повторите ввод.');
+              DeleteOneLine(-2);
+              MoveCursor(-2);
+            end;
           $10:
-            writeln('Неправильный язык. Повторите ввод.');
+            begin
+              writeln('Неправильный язык. Повторите ввод.');
+              DeleteOneLine(-2);
+              MoveCursor(-2);
+            end;
         end;
       until IsValid(inputStr) = $00;
 
