@@ -115,6 +115,27 @@ begin
   SetConsoleCursorPosition(hStdOut, Origin);
 end;
 
+procedure SwitchConsoleMode;
+var
+  hStdIn :THandle;
+  originConsoleMode :Cardinal;
+begin
+  hStdIn := GetStdHandle(STD_INPUT_HANDLE);
+  GetConsoleMode(hStdIn, originConsoleMode);
+
+  if originConsoleMode and (ENABLE_ECHO_INPUT or  ENABLE_QUICK_EDIT_MODE) <> 0 then
+  begin
+    originConsoleMode := originConsoleMode xor (ENABLE_ECHO_INPUT or  ENABLE_QUICK_EDIT_MODE);
+  end
+  else
+  begin
+    originConsoleMode := originConsoleMode or (ENABLE_ECHO_INPUT or  ENABLE_QUICK_EDIT_MODE);
+    FlushConsoleInputBuffer(hStdIn);
+  end;
+
+  SetConsoleMode(hStdIn, originConsoleMode);
+end;
+
 procedure TrimString(var str: string);
 const
   doubleSpace = '  ';
@@ -278,9 +299,11 @@ begin
     begin
       stageStr := words[level][random(Length(words[level]))];
 
+      SwitchConsoleMode;
       writeln(stageStr);
       sleep(3000);
       ClearScreen(true);
+      SwitchConsoleMode;
 
       writeln('¬ведите перевЄрнутое слово:');
 
@@ -351,12 +374,14 @@ begin
     begin
       stageArr := RandomArr(words, level + 4);
 
+      SwitchConsoleMode;
       write(stageArr[1]);
       for var i := 2 to level + 4 do
         write(' ', stageArr[i]);
       writeln;
       sleep(5000);
       ClearScreen(true);
+      SwitchConsoleMode;
 
       writeln('¬ведите словa в любом пор€дке:');
 
@@ -427,12 +452,14 @@ begin
     begin
       stageArr := RandomArr(words, level + 4);
 
+      SwitchConsoleMode;
       write(stageArr[1]);
       for var i := 2 to level + 4 do
         write(' ', stageArr[i]);
       writeln;
       sleep(5000);
       ClearScreen(true);
+      SwitchConsoleMode;
 
       writeln('¬ведите словa в строгом пор€дке:');
 
@@ -503,12 +530,14 @@ begin
     begin
       stageArr := RandomArr(words, level + 4);
 
+      SwitchConsoleMode;
       write(stageArr[1]);
       for var i := 2 to level + 4 do
         write(' ', stageArr[i]);
       writeln;
       sleep(5000);
       ClearScreen(true);
+      SwitchConsoleMode;
 
       writeln('¬ведите перевЄрнутые словa в любом пор€дке:');
 
@@ -579,12 +608,14 @@ begin
     begin
       stageArr := RandomArr(words, level + 4);
 
+      SwitchConsoleMode;
       write(stageArr[1]);
       for var i := 2 to level + 4 do
         write(' ', stageArr[i]);
       writeln;
       sleep(5000);
       ClearScreen(true);
+      SwitchConsoleMode;
 
       writeln('¬ведите предложение в обратном пор€дке:');
 
