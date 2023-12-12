@@ -117,23 +117,47 @@ end;
 
 procedure SwitchConsoleMode;
 var
-  hStdIn :THandle;
-  originConsoleMode :Cardinal;
+  hStdIn: THandle;
+  originConsoleMode: Cardinal;
 begin
   hStdIn := GetStdHandle(STD_INPUT_HANDLE);
   GetConsoleMode(hStdIn, originConsoleMode);
 
-  if originConsoleMode and (ENABLE_ECHO_INPUT or  ENABLE_QUICK_EDIT_MODE) <> 0 then
+  if originConsoleMode and (ENABLE_ECHO_INPUT or ENABLE_QUICK_EDIT_MODE) <> 0
+  then
   begin
-    originConsoleMode := originConsoleMode xor (ENABLE_ECHO_INPUT or  ENABLE_QUICK_EDIT_MODE);
+    originConsoleMode := originConsoleMode xor (ENABLE_ECHO_INPUT or
+      ENABLE_QUICK_EDIT_MODE);
   end
   else
   begin
-    originConsoleMode := originConsoleMode or (ENABLE_ECHO_INPUT or  ENABLE_QUICK_EDIT_MODE);
+    originConsoleMode := originConsoleMode or
+      (ENABLE_ECHO_INPUT or ENABLE_QUICK_EDIT_MODE);
     FlushConsoleInputBuffer(hStdIn);
   end;
 
   SetConsoleMode(hStdIn, originConsoleMode);
+end;
+
+procedure ColourOneLine(relPosition: integer; colour: LongWord);
+var
+  ConsoleSize, NumWritten: LongWord;
+  Origin, Starting: Coord;
+  ScreenBufferInfo: CONSOLE_SCREEN_BUFFER_INFO;
+  hStdOut: THandle;
+begin
+  hStdOut := GetStdHandle(STD_OUTPUT_HANDLE);
+  GetConsoleScreenBufferInfo(hStdOut, ScreenBufferInfo);
+
+  Starting.X := ScreenBufferInfo.dwCursorPosition.X;
+  Starting.Y := ScreenBufferInfo.dwCursorPosition.Y;
+
+  ConsoleSize := ScreenBufferInfo.dwSize.X;
+  Origin.X := 0;
+  Origin.Y := ScreenBufferInfo.dwCursorPosition.Y + relPosition;
+
+  FillConsoleOutputAttribute(hStdOut, colour, ConsoleSize, Origin, NumWritten);
+  SetConsoleCursorPosition(hStdOut, Starting);
 end;
 
 procedure TrimString(var str: string);
