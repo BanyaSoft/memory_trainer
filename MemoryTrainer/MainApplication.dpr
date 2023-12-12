@@ -354,12 +354,14 @@ begin
 
       if IsValidS1(stageStr, inputStr) = false then
       begin
+        ColourOneLine(-1, FOREGROUND_RED);
         writeln('ОТВЕТ НЕВЕРНЫЙ! Попробуйте еще раз.');
         counter := 0;
         writeln('Прогресс: ', counter, ' из 3.');
       end
       else
       begin
+        ColourOneLine(-1, FOREGROUND_GREEN);
         writeln('ОТВЕТ ВЕРНЫЙ!');
         inc(counter);
         writeln('Прогресс: ', counter, ' из 3.');
@@ -432,12 +434,14 @@ begin
 
       if IsValidS2(stageArr, level + 4, inputStr) = false then
       begin
+        ColourOneLine(-1, FOREGROUND_RED);
         writeln('ОТВЕТ НЕВЕРНЫЙ! Попробуйте еще раз.');
         counter := 0;
         writeln('Прогресс: ', counter, ' из 3.');
       end
       else
       begin
+        ColourOneLine(-1, FOREGROUND_GREEN);
         writeln('ОТВЕТ ВЕРНЫЙ!');
         inc(counter);
         writeln('Прогресс: ', counter, ' из 3.');
@@ -510,12 +514,14 @@ begin
 
       if IsValidS3(stageArr, level + 4, inputStr) = false then
       begin
+        ColourOneLine(-1, FOREGROUND_RED);
         writeln('ОТВЕТ НЕВЕРНЫЙ! Попробуйте еще раз.');
         counter := 0;
         writeln('Прогресс: ', counter, ' из 3.');
       end
       else
       begin
+        ColourOneLine(-1, FOREGROUND_GREEN);
         writeln('ОТВЕТ ВЕРНЫЙ!');
         inc(counter);
         writeln('Прогресс: ', counter, ' из 3.');
@@ -588,12 +594,14 @@ begin
 
       if IsValidS4(stageArr, level + 4, inputStr) = false then
       begin
+        ColourOneLine(-1, FOREGROUND_RED);
         writeln('ОТВЕТ НЕВЕРНЫЙ! Попробуйте еще раз.');
         counter := 0;
         writeln('Прогресс: ', counter, ' из 3.');
       end
       else
       begin
+        ColourOneLine(-1, FOREGROUND_GREEN);
         writeln('ОТВЕТ ВЕРНЫЙ!');
         inc(counter);
         writeln('Прогресс: ', counter, ' из 3.');
@@ -666,12 +674,14 @@ begin
 
       if IsValidS5(stageArr, level + 4, inputStr) = false then
       begin
+        ColourOneLine(-1, FOREGROUND_RED);
         writeln('ОТВЕТ НЕВЕРНЫЙ! Попробуйте еще раз.');
         counter := 0;
         writeln('Прогресс: ', counter, ' из 3.');
       end
       else
       begin
+        ColourOneLine(-1, FOREGROUND_GREEN);
         writeln('ОТВЕТ ВЕРНЫЙ!');
         inc(counter);
         writeln('Прогресс: ', counter, ' из 3.');
