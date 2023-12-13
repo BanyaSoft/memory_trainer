@@ -1,4 +1,4 @@
-program MainApplication;
+п»їprogram MainApplication;
 
 {$APPTYPE CONSOLE}
 {$R *.res}
@@ -20,7 +20,7 @@ var
   i, k: integer;
   line: string;
 begin
-  // Инициализация в процедурах запрещена, поэтому присваивание в основном блоке
+  // РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РІ РїСЂРѕС†РµРґСѓСЂР°С… Р·Р°РїСЂРµС‰РµРЅР°, РїРѕСЌС‚РѕРјСѓ РїСЂРёСЃРІР°РёРІР°РЅРёРµ РІ РѕСЃРЅРѕРІРЅРѕРј Р±Р»РѕРєРµ
   files[1] := '..\..\..\dictionaries\words5.txt';
   files[2] := '..\..\..\dictionaries\words6.txt';
   files[3] := '..\..\..\dictionaries\words7.txt';
@@ -28,17 +28,17 @@ begin
 
   for i := 1 to 4 do
   begin
-    // Открытие файла в режиме чтения
+    // РћС‚РєСЂС‹С‚РёРµ С„Р°Р№Р»Р° РІ СЂРµР¶РёРјРµ С‡С‚РµРЅРёСЏ
     AssignFile(fileVar, files[i]);
     Reset(fileVar);
 
-    // Чтение первой строки, где хранится количество слов, приведение ее в тип integer и установка длины динамического массива
+    // Р§С‚РµРЅРёРµ РїРµСЂРІРѕР№ СЃС‚СЂРѕРєРё, РіРґРµ С…СЂР°РЅРёС‚СЃСЏ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃР»РѕРІ, РїСЂРёРІРµРґРµРЅРёРµ РµРµ РІ С‚РёРї integer Рё СѓСЃС‚Р°РЅРѕРІРєР° РґР»РёРЅС‹ РґРёРЅР°РјРёС‡РµСЃРєРѕРіРѕ РјР°СЃСЃРёРІР°
     readln(fileVar, line);
     count := StrToInt(line);
     SetLength(words[i], count);
     k := 0;
 
-    // Построчное чтение и запись
+    // РџРѕСЃС‚СЂРѕС‡РЅРѕРµ С‡С‚РµРЅРёРµ Рё Р·Р°РїРёСЃСЊ
     while (not EOF(fileVar)) do
     begin
       readln(fileVar, line);
@@ -317,7 +317,7 @@ begin
   while level <= 4 do
   begin
     counter := 0;
-    writeln('Этап 1. Уровень ', level);
+    writeln('Р­С‚Р°Рї 1. РЈСЂРѕРІРµРЅСЊ ', level);
 
     while counter < 3 do
     begin
@@ -329,7 +329,7 @@ begin
       ClearScreen(true);
       SwitchConsoleMode;
 
-      writeln('Введите перевёрнутое слово:');
+      writeln('Р’РІРµРґРёС‚Рµ РїРµСЂРµРІС‘СЂРЅСѓС‚РѕРµ СЃР»РѕРІРѕ:');
 
       repeat
         readln(inputStr);
@@ -339,13 +339,13 @@ begin
         case IsValid(inputStr) of
           $01:
             begin
-              writeln('Пустая строка. Повторите ввод.');
+              writeln('РџСѓСЃС‚Р°СЏ СЃС‚СЂРѕРєР°. РџРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ.');
               DeleteOneLine(-2);
               MoveCursor(-2);
             end;
           $10:
             begin
-              writeln('Неправильный язык. Повторите ввод.');
+              writeln('РќРµРїСЂР°РІРёР»СЊРЅС‹Р№ СЏР·С‹Рє. РџРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ.');
               DeleteOneLine(-2);
               MoveCursor(-2);
             end;
@@ -355,19 +355,19 @@ begin
       if IsValidS1(stageStr, inputStr) = false then
       begin
         ColourOneLine(-1, FOREGROUND_RED);
-        writeln('ОТВЕТ НЕВЕРНЫЙ! Попробуйте еще раз.');
+        writeln('РћРўР’Р•Рў РќР•Р’Р•Р РќР«Р™! РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·.');
         counter := 0;
-        writeln('Прогресс: ', counter, ' из 3.');
+        writeln('РџСЂРѕРіСЂРµСЃСЃ: ', counter, ' РёР· 3.');
       end
       else
       begin
         ColourOneLine(-1, FOREGROUND_GREEN);
-        writeln('ОТВЕТ ВЕРНЫЙ!');
+        writeln('РћРўР’Р•Рў Р’Р•Р РќР«Р™!');
         inc(counter);
-        writeln('Прогресс: ', counter, ' из 3.');
+        writeln('РџСЂРѕРіСЂРµСЃСЃ: ', counter, ' РёР· 3.');
       end;
 
-      writeln('Нажмите Enter, чтобы продолжить.');
+      writeln('РќР°Р¶РјРёС‚Рµ Enter, С‡С‚РѕР±С‹ РїСЂРѕРґРѕР»Р¶РёС‚СЊ.');
       readln;
       ClearScreen(true);
     end;
@@ -376,8 +376,8 @@ begin
     ClearScreen(false);
   end;
 
-  writeln('Вы прошли Этап 1! Поздравляем!');
-  writeln('Нажмите Enter, чтобы перейти к следующему этапу.');
+  writeln('Р’С‹ РїСЂРѕС€Р»Рё Р­С‚Р°Рї 1! РџРѕР·РґСЂР°РІР»СЏРµРј!');
+  writeln('РќР°Р¶РјРёС‚Рµ Enter, С‡С‚РѕР±С‹ РїРµСЂРµР№С‚Рё Рє СЃР»РµРґСѓСЋС‰РµРјСѓ СЌС‚Р°РїСѓ.');
   readln;
   ClearScreen(false);
 end;
@@ -394,7 +394,7 @@ begin
   while level <= 4 do
   begin
     counter := 0;
-    writeln('Этап 2. Уровень ', level);
+    writeln('Р­С‚Р°Рї 2. РЈСЂРѕРІРµРЅСЊ ', level);
 
     while counter < 3 do
     begin
@@ -409,7 +409,7 @@ begin
       ClearScreen(true);
       SwitchConsoleMode;
 
-      writeln('Введите словa в любом порядке:');
+      writeln('Р’РІРµРґРёС‚Рµ СЃР»РѕРІa РІ Р»СЋР±РѕРј РїРѕСЂСЏРґРєРµ:');
 
       repeat
         readln(inputStr);
@@ -419,13 +419,13 @@ begin
         case IsValid(inputStr) of
           $01:
             begin
-              writeln('Пустая строка. Повторите ввод.');
+              writeln('РџСѓСЃС‚Р°СЏ СЃС‚СЂРѕРєР°. РџРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ.');
               DeleteOneLine(-2);
               MoveCursor(-2);
             end;
           $10:
             begin
-              writeln('Неправильный язык. Повторите ввод.');
+              writeln('РќРµРїСЂР°РІРёР»СЊРЅС‹Р№ СЏР·С‹Рє. РџРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ.');
               DeleteOneLine(-2);
               MoveCursor(-2);
             end;
@@ -435,19 +435,19 @@ begin
       if IsValidS2(stageArr, level + 4, inputStr) = false then
       begin
         ColourOneLine(-1, FOREGROUND_RED);
-        writeln('ОТВЕТ НЕВЕРНЫЙ! Попробуйте еще раз.');
+        writeln('РћРўР’Р•Рў РќР•Р’Р•Р РќР«Р™! РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·.');
         counter := 0;
-        writeln('Прогресс: ', counter, ' из 3.');
+        writeln('РџСЂРѕРіСЂРµСЃСЃ: ', counter, ' РёР· 3.');
       end
       else
       begin
         ColourOneLine(-1, FOREGROUND_GREEN);
-        writeln('ОТВЕТ ВЕРНЫЙ!');
+        writeln('РћРўР’Р•Рў Р’Р•Р РќР«Р™!');
         inc(counter);
-        writeln('Прогресс: ', counter, ' из 3.');
+        writeln('РџСЂРѕРіСЂРµСЃСЃ: ', counter, ' РёР· 3.');
       end;
 
-      writeln('Нажмите Enter, чтобы продолжить.');
+      writeln('РќР°Р¶РјРёС‚Рµ Enter, С‡С‚РѕР±С‹ РїСЂРѕРґРѕР»Р¶РёС‚СЊ.');
       readln;
       ClearScreen(true);
     end;
@@ -456,8 +456,8 @@ begin
     ClearScreen(false);
   end;
 
-  writeln('Вы прошли Этап 2! Поздравляем!');
-  writeln('Нажмите Enter, чтобы перейти к следующему этапу.');
+  writeln('Р’С‹ РїСЂРѕС€Р»Рё Р­С‚Р°Рї 2! РџРѕР·РґСЂР°РІР»СЏРµРј!');
+  writeln('РќР°Р¶РјРёС‚Рµ Enter, С‡С‚РѕР±С‹ РїРµСЂРµР№С‚Рё Рє СЃР»РµРґСѓСЋС‰РµРјСѓ СЌС‚Р°РїСѓ.');
   readln;
   ClearScreen(false);
 end;
@@ -474,7 +474,7 @@ begin
   while level <= 4 do
   begin
     counter := 0;
-    writeln('Этап 3. Уровень ', level);
+    writeln('Р­С‚Р°Рї 3. РЈСЂРѕРІРµРЅСЊ ', level);
 
     while counter < 3 do
     begin
@@ -489,7 +489,7 @@ begin
       ClearScreen(true);
       SwitchConsoleMode;
 
-      writeln('Введите словa в строгом порядке:');
+      writeln('Р’РІРµРґРёС‚Рµ СЃР»РѕРІa РІ СЃС‚СЂРѕРіРѕРј РїРѕСЂСЏРґРєРµ:');
 
       repeat
         readln(inputStr);
@@ -499,13 +499,13 @@ begin
         case IsValid(inputStr) of
           $01:
             begin
-              writeln('Пустая строка. Повторите ввод.');
+              writeln('РџСѓСЃС‚Р°СЏ СЃС‚СЂРѕРєР°. РџРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ.');
               DeleteOneLine(-2);
               MoveCursor(-2);
             end;
           $10:
             begin
-              writeln('Неправильный язык. Повторите ввод.');
+              writeln('РќРµРїСЂР°РІРёР»СЊРЅС‹Р№ СЏР·С‹Рє. РџРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ.');
               DeleteOneLine(-2);
               MoveCursor(-2);
             end;
@@ -515,19 +515,19 @@ begin
       if IsValidS3(stageArr, level + 4, inputStr) = false then
       begin
         ColourOneLine(-1, FOREGROUND_RED);
-        writeln('ОТВЕТ НЕВЕРНЫЙ! Попробуйте еще раз.');
+        writeln('РћРўР’Р•Рў РќР•Р’Р•Р РќР«Р™! РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·.');
         counter := 0;
-        writeln('Прогресс: ', counter, ' из 3.');
+        writeln('РџСЂРѕРіСЂРµСЃСЃ: ', counter, ' РёР· 3.');
       end
       else
       begin
         ColourOneLine(-1, FOREGROUND_GREEN);
-        writeln('ОТВЕТ ВЕРНЫЙ!');
+        writeln('РћРўР’Р•Рў Р’Р•Р РќР«Р™!');
         inc(counter);
-        writeln('Прогресс: ', counter, ' из 3.');
+        writeln('РџСЂРѕРіСЂРµСЃСЃ: ', counter, ' РёР· 3.');
       end;
 
-      writeln('Нажмите Enter, чтобы продолжить.');
+      writeln('РќР°Р¶РјРёС‚Рµ Enter, С‡С‚РѕР±С‹ РїСЂРѕРґРѕР»Р¶РёС‚СЊ.');
       readln;
       ClearScreen(true);
     end;
@@ -536,8 +536,8 @@ begin
     ClearScreen(false);
   end;
 
-  writeln('Вы прошли Этап 3! Поздравляем!');
-  writeln('Нажмите Enter, чтобы перейти к следующему этапу.');
+  writeln('Р’С‹ РїСЂРѕС€Р»Рё Р­С‚Р°Рї 3! РџРѕР·РґСЂР°РІР»СЏРµРј!');
+  writeln('РќР°Р¶РјРёС‚Рµ Enter, С‡С‚РѕР±С‹ РїРµСЂРµР№С‚Рё Рє СЃР»РµРґСѓСЋС‰РµРјСѓ СЌС‚Р°РїСѓ.');
   readln;
   ClearScreen(false);
 end;
@@ -554,7 +554,7 @@ begin
   while level <= 4 do
   begin
     counter := 0;
-    writeln('Этап 4. Уровень ', level);
+    writeln('Р­С‚Р°Рї 4. РЈСЂРѕРІРµРЅСЊ ', level);
 
     while counter < 3 do
     begin
@@ -569,7 +569,7 @@ begin
       ClearScreen(true);
       SwitchConsoleMode;
 
-      writeln('Введите перевёрнутые словa в любом порядке:');
+      writeln('Р’РІРµРґРёС‚Рµ РїРµСЂРµРІС‘СЂРЅСѓС‚С‹Рµ СЃР»РѕРІa РІ Р»СЋР±РѕРј РїРѕСЂСЏРґРєРµ:');
 
       repeat
         readln(inputStr);
@@ -579,13 +579,13 @@ begin
         case IsValid(inputStr) of
           $01:
             begin
-              writeln('Пустая строка. Повторите ввод.');
+              writeln('РџСѓСЃС‚Р°СЏ СЃС‚СЂРѕРєР°. РџРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ.');
               DeleteOneLine(-2);
               MoveCursor(-2);
             end;
           $10:
             begin
-              writeln('Неправильный язык. Повторите ввод.');
+              writeln('РќРµРїСЂР°РІРёР»СЊРЅС‹Р№ СЏР·С‹Рє. РџРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ.');
               DeleteOneLine(-2);
               MoveCursor(-2);
             end;
@@ -595,19 +595,19 @@ begin
       if IsValidS4(stageArr, level + 4, inputStr) = false then
       begin
         ColourOneLine(-1, FOREGROUND_RED);
-        writeln('ОТВЕТ НЕВЕРНЫЙ! Попробуйте еще раз.');
+        writeln('РћРўР’Р•Рў РќР•Р’Р•Р РќР«Р™! РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·.');
         counter := 0;
-        writeln('Прогресс: ', counter, ' из 3.');
+        writeln('РџСЂРѕРіСЂРµСЃСЃ: ', counter, ' РёР· 3.');
       end
       else
       begin
         ColourOneLine(-1, FOREGROUND_GREEN);
-        writeln('ОТВЕТ ВЕРНЫЙ!');
+        writeln('РћРўР’Р•Рў Р’Р•Р РќР«Р™!');
         inc(counter);
-        writeln('Прогресс: ', counter, ' из 3.');
+        writeln('РџСЂРѕРіСЂРµСЃСЃ: ', counter, ' РёР· 3.');
       end;
 
-      writeln('Нажмите Enter, чтобы продолжить.');
+      writeln('РќР°Р¶РјРёС‚Рµ Enter, С‡С‚РѕР±С‹ РїСЂРѕРґРѕР»Р¶РёС‚СЊ.');
       readln;
       ClearScreen(true);
     end;
@@ -616,8 +616,8 @@ begin
     ClearScreen(false);
   end;
 
-  writeln('Вы прошли Этап 4! Поздравляем!');
-  writeln('Нажмите Enter, чтобы перейти к следующему этапу.');
+  writeln('Р’С‹ РїСЂРѕС€Р»Рё Р­С‚Р°Рї 4! РџРѕР·РґСЂР°РІР»СЏРµРј!');
+  writeln('РќР°Р¶РјРёС‚Рµ Enter, С‡С‚РѕР±С‹ РїРµСЂРµР№С‚Рё Рє СЃР»РµРґСѓСЋС‰РµРјСѓ СЌС‚Р°РїСѓ.');
   readln;
   ClearScreen(false);
 end;
@@ -634,7 +634,7 @@ begin
   while level <= 4 do
   begin
     counter := 0;
-    writeln('Этап 5. Уровень ', level);
+    writeln('Р­С‚Р°Рї 5. РЈСЂРѕРІРµРЅСЊ ', level);
 
     while counter < 3 do
     begin
@@ -649,7 +649,7 @@ begin
       ClearScreen(true);
       SwitchConsoleMode;
 
-      writeln('Введите предложение в обратном порядке:');
+      writeln('Р’РІРµРґРёС‚Рµ РїСЂРµРґР»РѕР¶РµРЅРёРµ РІ РѕР±СЂР°С‚РЅРѕРј РїРѕСЂСЏРґРєРµ:');
 
       repeat
         readln(inputStr);
@@ -659,13 +659,13 @@ begin
         case IsValid(inputStr) of
           $01:
             begin
-              writeln('Пустая строка. Повторите ввод.');
+              writeln('РџСѓСЃС‚Р°СЏ СЃС‚СЂРѕРєР°. РџРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ.');
               DeleteOneLine(-2);
               MoveCursor(-2);
             end;
           $10:
             begin
-              writeln('Неправильный язык. Повторите ввод.');
+              writeln('РќРµРїСЂР°РІРёР»СЊРЅС‹Р№ СЏР·С‹Рє. РџРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ.');
               DeleteOneLine(-2);
               MoveCursor(-2);
             end;
@@ -675,19 +675,19 @@ begin
       if IsValidS5(stageArr, level + 4, inputStr) = false then
       begin
         ColourOneLine(-1, FOREGROUND_RED);
-        writeln('ОТВЕТ НЕВЕРНЫЙ! Попробуйте еще раз.');
+        writeln('РћРўР’Р•Рў РќР•Р’Р•Р РќР«Р™! РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·.');
         counter := 0;
-        writeln('Прогресс: ', counter, ' из 3.');
+        writeln('РџСЂРѕРіСЂРµСЃСЃ: ', counter, ' РёР· 3.');
       end
       else
       begin
         ColourOneLine(-1, FOREGROUND_GREEN);
-        writeln('ОТВЕТ ВЕРНЫЙ!');
+        writeln('РћРўР’Р•Рў Р’Р•Р РќР«Р™!');
         inc(counter);
-        writeln('Прогресс: ', counter, ' из 3.');
+        writeln('РџСЂРѕРіСЂРµСЃСЃ: ', counter, ' РёР· 3.');
       end;
 
-      writeln('Нажмите Enter, чтобы продолжить.');
+      writeln('РќР°Р¶РјРёС‚Рµ Enter, С‡С‚РѕР±С‹ РїСЂРѕРґРѕР»Р¶РёС‚СЊ.');
       readln;
       ClearScreen(true);
     end;
@@ -696,8 +696,8 @@ begin
     ClearScreen(false);
   end;
 
-  writeln('Вы прошли Этап 5! Поздравляем!');
-  writeln('Нажмите Enter, чтобы перейти к следующему этапу.');
+  writeln('Р’С‹ РїСЂРѕС€Р»Рё Р­С‚Р°Рї 5! РџРѕР·РґСЂР°РІР»СЏРµРј!');
+  writeln('РќР°Р¶РјРёС‚Рµ Enter, С‡С‚РѕР±С‹ РїРµСЂРµР№С‚Рё Рє СЃР»РµРґСѓСЋС‰РµРјСѓ СЌС‚Р°РїСѓ.');
   readln;
   ClearScreen(false);
 end;
@@ -706,8 +706,8 @@ procedure StartGame();
 var
   words: TDictionary;
 begin
-  writeln('Добро пожаловать в приложение Memory Trainer!');
-  writeln('Нажмите Enter, чтобы начать.');
+  writeln('Р”РѕР±СЂРѕ РїРѕР¶Р°Р»РѕРІР°С‚СЊ РІ РїСЂРёР»РѕР¶РµРЅРёРµ Memory Trainer!');
+  writeln('РќР°Р¶РјРёС‚Рµ Enter, С‡С‚РѕР±С‹ РЅР°С‡Р°С‚СЊ.');
   readln;
   ClearScreen(false);
   LoadDictionary(words);
@@ -716,8 +716,8 @@ begin
   Stage3(words);
   Stage4(words);
   Stage5(words);
-  writeln('Спасибо, что воспользовались нашим приложением!');
-  writeln('Нажмите Enter, чтобы выйти.');
+  writeln('РЎРїР°СЃРёР±Рѕ, С‡С‚Рѕ РІРѕСЃРїРѕР»СЊР·РѕРІР°Р»РёСЃСЊ РЅР°С€РёРј РїСЂРёР»РѕР¶РµРЅРёРµРј!');
+  writeln('РќР°Р¶РјРёС‚Рµ Enter, С‡С‚РѕР±С‹ РІС‹Р№С‚Рё.');
   readln;
 end;
 
