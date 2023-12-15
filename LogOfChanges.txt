@@ -1,9 +1,14 @@
 Log of changes:
-1. ClearConsole now have keepFirstLine := true as default value
-2. SetConsoleDifficulty launched before game starts and get difficulty lvl from player
-3. Now all the functions and procedures have their prototypes at the beginning of the file program.
-It's done because of large amount of calling subprograms from other ones to avoid complexity with
-the order of functions in the program.
-4. Stage1...Stage5 arguments were changed (difficulty: integer was added)
-5. LoadDictionary folder was deleted from repository
-6. May be other little improvements, I dont remember ;)
+14.12.23
+	1. ClearConsole now have keepFirstLine := true as default value
+	2. SetConsoleDifficulty launched before game starts and get difficulty lvl from player
+	3. Now all the functions and procedures have their prototypes at the beginning of the file program.
+	It's done because of large amount of calling subprograms from other ones to avoid complexity with
+	the order of functions in the program.
+	4. Stage1...Stage5 arguments were changed (difficulty: integer was added)
+	5. LoadDictionary folder was deleted from repository
+	6. May be other little improvements, I dont remember ;)
+15.12.23
+	1. Fixing SetDifficultyLevel function
+	2. Procedure NewLevelAnimation
+	3. Color and text formatting changes.
