@@ -399,12 +399,14 @@ begin
           $01:
             begin
               writeln('Пустая строка. Повторите ввод.');
+              ColourOneLine(-1, FOREGROUND_RED or FOREGROUND_GREEN);
               DeleteOneLine(-2);
               MoveCursor(-2);
             end;
           $10:
             begin
               writeln('Неправильный язык. Повторите ввод.');
+              ColourOneLine(-1, FOREGROUND_RED or FOREGROUND_GREEN);
               DeleteOneLine(-2);
               MoveCursor(-2);
             end;
@@ -477,12 +479,14 @@ begin
           $01:
             begin
               writeln('Пустая строка. Повторите ввод.');
+              ColourOneLine(-1, FOREGROUND_RED or FOREGROUND_GREEN);
               DeleteOneLine(-2);
               MoveCursor(-2);
             end;
           $10:
             begin
               writeln('Неправильный язык. Повторите ввод.');
+              ColourOneLine(-1, FOREGROUND_RED or FOREGROUND_GREEN);
               DeleteOneLine(-2);
               MoveCursor(-2);
             end;
@@ -555,12 +559,14 @@ begin
           $01:
             begin
               writeln('Пустая строка. Повторите ввод.');
+              ColourOneLine(-1, FOREGROUND_RED or FOREGROUND_GREEN);
               DeleteOneLine(-2);
               MoveCursor(-2);
             end;
           $10:
             begin
               writeln('Неправильный язык. Повторите ввод.');
+              ColourOneLine(-1, FOREGROUND_RED or FOREGROUND_GREEN);
               DeleteOneLine(-2);
               MoveCursor(-2);
             end;
@@ -633,12 +639,14 @@ begin
           $01:
             begin
               writeln('Пустая строка. Повторите ввод.');
+              ColourOneLine(-1, FOREGROUND_RED or FOREGROUND_GREEN);
               DeleteOneLine(-2);
               MoveCursor(-2);
             end;
           $10:
             begin
               writeln('Неправильный язык. Повторите ввод.');
+              ColourOneLine(-1, FOREGROUND_RED or FOREGROUND_GREEN);
               DeleteOneLine(-2);
               MoveCursor(-2);
             end;
@@ -711,12 +719,14 @@ begin
           $01:
             begin
               writeln('Пустая строка. Повторите ввод.');
+              ColourOneLine(-1, FOREGROUND_RED or FOREGROUND_GREEN);
               DeleteOneLine(-2);
               MoveCursor(-2);
             end;
           $10:
             begin
               writeln('Неправильный язык. Повторите ввод.');
+              ColourOneLine(-1, FOREGROUND_RED or FOREGROUND_GREEN);
               DeleteOneLine(-2);
               MoveCursor(-2);
             end;
