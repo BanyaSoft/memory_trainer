@@ -7,10 +7,12 @@ uses
     System.SysUtils,
     Windows,
     System.StrUtils;
+
 const
-    WARNING_COLOR = $6f;
-    ERROR_COLOR = $4f;
-    CORRECT_COLOR = $2f;
+    WARNING_COLOR = $6F;
+    ERROR_COLOR = $4F;
+    CORRECT_COLOR = $2F;
+
 type
     TDictionary = array [1 .. 4] of array of string;
     TSetOfWords = array [1 .. 8] of string;
@@ -347,7 +349,7 @@ begin
         Result := false;
 end;
 
-function IsValidS4;
+function IsValidS5;
 const
     space = ' ';
 var
@@ -375,34 +377,56 @@ begin
 
 end;
 
-function IsValidS5;
+function IsValidS4;
 const
     space = ' ';
 var
-    checkString: string;
+    i: byte;
+    checkWord: string;
+    flag: boolean;
 begin
-    checkString := String.Join(space, stageArr, 0, numOfWords);
-    checkString := ReverseString(checkString);
-    if checkString = userStr then
-        Result := True
-    else
-        Result := false;
+    flag := True;
+    i := numOfWords;
+    while i >= 1 do
+    begin
+        checkWord := Concat(checkWord, ' ', stageArr[i]);
+        dec(i);
+    end;
+    Delete(checkWord, 1, 1);
+
+    if userStr <> checkWord then
+        flag := false;
+    Result := flag;
+
 end;
 
 procedure Stage1;
 var
-    level, counter: integer;
+    level, counter, maxLevel, sleepTime: integer;
+    showLevelDecrease: integer;
     stageStr, inputStr: string;
 begin
     Randomize;
     stageStr := '';
     inputStr := '';
-    level := 1;
-
-    while level <= 4 do
+    if difficulty = 1 then
+    begin
+        showLevelDecrease := 0;
+        level := 1;
+        maxLevel := 2;
+        sleepTime := 3000;
+    end
+    else
+    begin
+        showLevelDecrease := 2;
+        level := 3;
+        maxLevel := 4;
+        sleepTime := 2000;
+    end;
+    while level <= maxLevel do
     begin
         counter := 0;
-        writeln('<<<< Этап 1. Уровень: ', level, ' >>>>');
+        writeln('<<<< Этап 1. Уровень: ', level - showLevelDecrease, ' >>>>');
 
         while counter < 3 do
         begin
@@ -410,7 +434,7 @@ begin
 
             SwitchConsoleMode;
             writeln(stageStr);
-            Sleep(3000);
+            Sleep(sleepTime);
             ClearScreen(True);
             SwitchConsoleMode;
 
@@ -472,17 +496,31 @@ end;
 
 procedure Stage2;
 var
-    level, counter: integer;
+    level, maxLevel, sleepTime, counter: integer;
+    showLevelDecrease: integer;
     inputStr: string;
     stageArr: TSetOfWords;
 begin
-    level := 1;
     inputStr := '';
+    if difficulty = 1 then
+    begin
+        showLevelDecrease := 0;
+        level := 1;
+        maxLevel := 2;
+        sleepTime := 5000;
+    end
+    else
+    begin
+        showLevelDecrease := 2;
+        level := 3;
+        maxLevel := 4;
+        sleepTime := 4000;
+    end;
 
-    while level <= 4 do
+    while level <= maxLevel do
     begin
         counter := 0;
-        writeln('<<<< Этап 2. Уровень: ', level, ' >>>>');
+        writeln('<<<< Этап 2. Уровень: ', level - showLevelDecrease, ' >>>>');
 
         while counter < 3 do
         begin
@@ -493,7 +531,7 @@ begin
             for var i := 2 to level + 4 do
                 write(' ', stageArr[i]);
             writeln;
-            Sleep(5000);
+            Sleep(sleepTime);
             ClearScreen(True);
             SwitchConsoleMode;
 
@@ -555,17 +593,30 @@ end;
 
 procedure Stage3;
 var
-    level, counter: integer;
+    level, counter, maxLevel, sleepTime: integer;
+    showLevelDecrease: integer;
     inputStr: string;
     stageArr: TSetOfWords;
 begin
-    level := 1;
     inputStr := '';
-
-    while level <= 4 do
+    if difficulty = 1 then
+    begin
+        showLevelDecrease := 0;
+        level := 1;
+        maxLevel := 2;
+        sleepTime := 5000;
+    end
+    else
+    begin
+        showLevelDecrease := 2;
+        level := 3;
+        maxLevel := 4;
+        sleepTime := 4000;
+    end;
+    while level <= maxLevel do
     begin
         counter := 0;
-        writeln('<<<< Этап 3. Уровень: ', level, ' >>>>');
+        writeln('<<<< Этап 3. Уровень: ', level - showLevelDecrease, ' >>>>');
 
         while counter < 3 do
         begin
@@ -576,7 +627,7 @@ begin
             for var i := 2 to level + 4 do
                 write(' ', stageArr[i]);
             writeln;
-            Sleep(5000);
+            Sleep(sleepTime);
             ClearScreen(True);
             SwitchConsoleMode;
 
@@ -636,19 +687,33 @@ begin
     ClearScreen(false);
 end;
 
-procedure Stage4;
+procedure Stage5;
 var
-    level, counter: integer;
+    level, counter, maxLevel, sleepTime: integer;
+    showLevelDecrease: integer;
     inputStr: string;
     stageArr: TSetOfWords;
 begin
-    level := 1;
     inputStr := '';
+    if difficulty = 1 then
+    begin
+        showLevelDecrease := 0;
+        level := 1;
+        maxLevel := 2;
+        sleepTime := 5000;
+    end
+    else
+    begin
+        showLevelDecrease := 2;
+        level := 3;
+        maxLevel := 4;
+        sleepTime := 4000;
+    end;
 
-    while level <= 4 do
+    while level <= maxLevel do
     begin
         counter := 0;
-        writeln('<<<< Этап 4. Уровень: ', level, ' >>>>');
+        writeln('<<<< Этап 5. Уровень: ', level - showLevelDecrease, ' >>>>');
 
         while counter < 3 do
         begin
@@ -659,94 +724,11 @@ begin
             for var i := 2 to level + 4 do
                 write(' ', stageArr[i]);
             writeln;
-            Sleep(5000);
+            Sleep(sleepTime);
             ClearScreen(True);
             SwitchConsoleMode;
 
             writeln('Введите перевёрнутые словa в любом порядке:');
-
-            repeat
-                readln(inputStr);
-                TrimString(inputStr);
-                inputStr := AnsiUpperCase(inputStr);
-                DeleteOneLine(0);
-                case IsValid(inputStr) of
-                    $01:
-                        begin
-                            writeln('Пустая строка. Повторите ввод.');
-                            ColourOneLine(-1, WARNING_COLOR);
-                            DeleteOneLine(-2);
-                            MoveCursor(-2);
-                        end;
-                    $10:
-                        begin
-                            writeln('Неправильный язык. Повторите ввод.');
-                            ColourOneLine(-1, WARNING_COLOR);
-                            DeleteOneLine(-2);
-                            MoveCursor(-2);
-                        end;
-                end;
-            until IsValid(inputStr) = $00;
-
-            if IsValidS4(stageArr, level + 4, inputStr) = false then
-            begin
-                ColourOneLine(-1, ERROR_COLOR);
-                counter := 0;
-                writeln('| = = = = = = = = = = = = = = = = = |');
-                writeln('|  Прогресс: ', counter:3, ' из 3.              |');
-            end
-            else
-            begin
-                ColourOneLine(-1, CORRECT_COLOR);
-                inc(counter);
-                writeln('| = = = = = = = = = = = = = = = = = |');
-                writeln('|  Прогресс: ', counter:3, ' из 3.              |');
-            end;
-
-            writeln('|  Нажмите Enter, чтобы продолжить. |');
-            writeln('| = = = = = = = = = = = = = = = = = |');
-            readln;
-            ClearScreen(True);
-        end;
-
-        inc(level);
-        NewLevelAnimation;
-    end;
-
-    writeln('Вы прошли Этап 4! Поздравляем!');
-    writeln('Нажмите Enter, чтобы перейти к следующему этапу.');
-    readln;
-    ClearScreen(false);
-end;
-
-procedure Stage5;
-var
-    level, counter: integer;
-    inputStr: string;
-    stageArr: TSetOfWords;
-begin
-    level := 1;
-    inputStr := '';
-
-    while level <= 4 do
-    begin
-        counter := 0;
-        writeln('<<<< Этап 2. Уровень: ', level, ' >>>>');
-
-        while counter < 3 do
-        begin
-            stageArr := RandomArr(words, level + 4);
-
-            SwitchConsoleMode;
-            write(stageArr[1]);
-            for var i := 2 to level + 4 do
-                write(' ', stageArr[i]);
-            writeln;
-            Sleep(5000);
-            ClearScreen(True);
-            SwitchConsoleMode;
-
-            writeln('Введите предложение в обратном порядке:');
 
             repeat
                 readln(inputStr);
@@ -802,6 +784,103 @@ begin
     ClearScreen(false);
 end;
 
+procedure Stage4;
+var
+    level, counter, maxLevel, sleepTime: integer;
+    showLevelDecrease: integer;
+    inputStr: string;
+    stageArr: TSetOfWords;
+begin
+    inputStr := '';
+    if difficulty = 1 then
+    begin
+        showLevelDecrease := 0;
+        level := 1;
+        maxLevel := 2;
+        sleepTime := 5000;
+    end
+    else
+    begin
+        showLevelDecrease := 2;
+        level := 3;
+        maxLevel := 4;
+        sleepTime := 4000;
+    end;
+
+    while level <= maxLevel do
+    begin
+        counter := 0;
+        writeln('<<<< Этап 4. Уровень: ', level - showLevelDecrease, ' >>>>');
+
+        while counter < 3 do
+        begin
+            stageArr := RandomArr(words, level + 4);
+
+            SwitchConsoleMode;
+            write(stageArr[1]);
+            for var i := 2 to level + 4 do
+                write(' ', stageArr[i]);
+            writeln;
+            Sleep(sleepTime);
+            ClearScreen(True);
+            SwitchConsoleMode;
+
+            writeln('Введите предложение в обратном порядке:');
+
+            repeat
+                readln(inputStr);
+                TrimString(inputStr);
+                inputStr := AnsiUpperCase(inputStr);
+                DeleteOneLine(0);
+                case IsValid(inputStr) of
+                    $01:
+                        begin
+                            writeln('Пустая строка. Повторите ввод.');
+                            ColourOneLine(-1, WARNING_COLOR);
+                            DeleteOneLine(-2);
+                            MoveCursor(-2);
+                        end;
+                    $10:
+                        begin
+                            writeln('Неправильный язык. Повторите ввод.');
+                            ColourOneLine(-1, WARNING_COLOR);
+                            DeleteOneLine(-2);
+                            MoveCursor(-2);
+                        end;
+                end;
+            until IsValid(inputStr) = $00;
+
+            if IsValidS4(stageArr, level + 4, inputStr) = false then
+            begin
+                ColourOneLine(-1, ERROR_COLOR);
+                counter := 0;
+                writeln('| = = = = = = = = = = = = = = = = = |');
+                writeln('|  Прогресс: ', counter:3, ' из 3.              |');
+            end
+            else
+            begin
+                ColourOneLine(-1, CORRECT_COLOR);
+                inc(counter);
+                writeln('| = = = = = = = = = = = = = = = = = |');
+                writeln('|  Прогресс: ', counter:3, ' из 3.              |');
+            end;
+
+            writeln('|  Нажмите Enter, чтобы продолжить. |');
+            writeln('| = = = = = = = = = = = = = = = = = |');
+            readln;
+            ClearScreen(True);
+        end;
+
+        inc(level);
+        NewLevelAnimation;
+    end;
+
+    writeln('Вы прошли Этап 4! Поздравляем!');
+    writeln('Нажмите Enter, чтобы перейти к следующему этапу.');
+    readln;
+    ClearScreen(false);
+end;
+
 procedure StartGame;
 var
     words: TDictionary;
@@ -813,9 +892,9 @@ begin
     difficulty := SetDifficultyLevel;
     ClearScreen(false);
     LoadDictionary(words);
-    Stage1(words, difficulty);
-    Stage2(words, difficulty);
-    Stage3(words, difficulty);
+    // Stage1(words, difficulty);
+    // Stage2(words, difficulty);
+    // Stage3(words, difficulty);
     Stage4(words, difficulty);
     Stage5(words, difficulty);
     writeln('Спасибо, что воспользовались нашим приложением!');
