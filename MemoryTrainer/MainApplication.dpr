@@ -10,7 +10,7 @@ uses
 
 const
     WARNING_COLOR = $6F;
-    ERROR_COLOR = $4F;
+    INCORRECT_COLOR = $4F;
     CORRECT_COLOR = $2F;
 
 type
@@ -147,7 +147,7 @@ begin
         if repeatInputFlag then
         begin
             writeln('Введен несуществующий уровень сложности! Попробуйте еще раз.');
-            ColourOneLine(-1, ERROR_COLOR);
+            ColourOneLine(-1, INCORRECT_COLOR);
         end;
 
         writeln('Введите число для выбора уровня сложности игры: ');
@@ -303,12 +303,14 @@ begin
 end;
 
 function IsValidS1;
+var flag: boolean;
 begin
     stageStr := ReverseString(stageStr);
     if stageStr = userStr then
-        Result := True
+        flag := True
     else
-        Result := false;
+        flag := false;
+    Result := flag;
 end;
 
 function IsValidS2;
@@ -341,12 +343,37 @@ const
     space = ' ';
 var
     checkString: string;
+    flag: boolean;
 begin
     checkString := String.Join(space, stageArr, 0, numOfWords);
     if checkString = userStr then
-        Result := True
+        flag := True
     else
-        Result := false;
+        flag := False;
+    Result := flag;
+end;
+
+function IsValidS4;
+const
+    space = ' ';
+var
+    i: byte;
+    checkWord: string;
+    flag: boolean;
+begin
+    flag := True;
+    i := numOfWords;
+    while i >= 1 do
+    begin
+        checkWord := Concat(checkWord, ' ', stageArr[i]);
+        dec(i);
+    end;
+    Delete(checkWord, 1, 1);
+
+    if userStr <> checkWord then
+        flag := False;
+    Result := flag;
+
 end;
 
 function IsValidS5;
@@ -368,34 +395,11 @@ begin
         checkWord := stageArr[i];
         checkWord := Concat(space, checkWord, space);
         if Pos(checkWord, userStr) = 0 then
-            flag := false
+            flag := False
         else
             Delete(userStr, Pos(checkWord, userStr), Length(checkWord) - 1);
         inc(i);
     end;
-    Result := flag;
-
-end;
-
-function IsValidS4;
-const
-    space = ' ';
-var
-    i: byte;
-    checkWord: string;
-    flag: boolean;
-begin
-    flag := True;
-    i := numOfWords;
-    while i >= 1 do
-    begin
-        checkWord := Concat(checkWord, ' ', stageArr[i]);
-        dec(i);
-    end;
-    Delete(checkWord, 1, 1);
-
-    if userStr <> checkWord then
-        flag := false;
     Result := flag;
 
 end;
@@ -465,7 +469,7 @@ begin
 
             if IsValidS1(stageStr, inputStr) = false then
             begin
-                ColourOneLine(-1, ERROR_COLOR);
+                ColourOneLine(-1, INCORRECT_COLOR);
                 counter := 0;
                 writeln('| = = = = = = = = = = = = = = = = = |');
                 writeln('|  Прогресс: ', counter:3, ' из 3.              |');
@@ -562,7 +566,7 @@ begin
 
             if IsValidS2(stageArr, level + 4, inputStr) = false then
             begin
-                ColourOneLine(-1, ERROR_COLOR);
+                ColourOneLine(-1, INCORRECT_COLOR);
                 counter := 0;
                 writeln('| = = = = = = = = = = = = = = = = = |');
                 writeln('|  Прогресс: ', counter:3, ' из 3.              |');
@@ -658,7 +662,7 @@ begin
 
             if IsValidS3(stageArr, level + 4, inputStr) = false then
             begin
-                ColourOneLine(-1, ERROR_COLOR);
+                ColourOneLine(-1, INCORRECT_COLOR);
                 counter := 0;
                 writeln('| = = = = = = = = = = = = = = = = = |');
                 writeln('|  Прогресс: ', counter:3, ' из 3.              |');
@@ -755,7 +759,7 @@ begin
 
             if IsValidS5(stageArr, level + 4, inputStr) = false then
             begin
-                ColourOneLine(-1, ERROR_COLOR);
+                ColourOneLine(-1, INCORRECT_COLOR);
                 counter := 0;
                 writeln('| = = = = = = = = = = = = = = = = = |');
                 writeln('|  Прогресс: ', counter:3, ' из 3.              |');
@@ -852,7 +856,7 @@ begin
 
             if IsValidS4(stageArr, level + 4, inputStr) = false then
             begin
-                ColourOneLine(-1, ERROR_COLOR);
+                ColourOneLine(-1, INCORRECT_COLOR);
                 counter := 0;
                 writeln('| = = = = = = = = = = = = = = = = = |');
                 writeln('|  Прогресс: ', counter:3, ' из 3.              |');
@@ -892,9 +896,9 @@ begin
     difficulty := SetDifficultyLevel;
     ClearScreen(false);
     LoadDictionary(words);
-    // Stage1(words, difficulty);
-    // Stage2(words, difficulty);
-    // Stage3(words, difficulty);
+    Stage1(words, difficulty);
+    Stage2(words, difficulty);
+    Stage3(words, difficulty);
     Stage4(words, difficulty);
     Stage5(words, difficulty);
     writeln('Спасибо, что воспользовались нашим приложением!');
