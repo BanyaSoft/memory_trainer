@@ -96,13 +96,14 @@ end;
 procedure NewLevelAnimation;
 begin
     ClearScreen;
-    writeln(#10#10#10#10#10#10#10#10);
-    writeln(#9#9'|    | ||||||| |       |   |     |||||| |     | |||||| |      ||');
-    writeln(#9#9'||   | |       |       |   |     |      |     | |      |      ||');
-    writeln(#9#9'| |  | |||||||  |  |  |    |     |||||| |     | |||||| |      ||');
-    writeln(#9#9'|  | | |        |  |  |    |     |       |   |  |      |      ||');
-    writeln(#9#9'|   || |         |   |     |     |        | |   |      |        ');
-    writeln(#9#9'|    | |||||||   |   |     ||||| |||||||   |    |||||| |||||| ()');
+    writeln('╔═══════════════════════════════════════════════════════════════════════════════════════════════════╗');
+    writeln('║     ╔═      ╗  ╔══════  ╔          ╗     ╗         ╔══════  ╔       ╗  ╔══════  ╗        ╔╦╦╗     ║');
+    writeln('║     ║ ╚     ║  ║        ║          ║     ║         ║        ║       ║  ║        ║        ╠╬╬╣     ║');
+    writeln('║     ║  ╚    ║  ╠═════   ╚          ╝     ║         ╠═════   ╚       ╝  ╠═════   ║        ╠╬╬╣     ║');
+    writeln('║     ║   ╚   ║  ║         ║   ╔╗   ║      ║         ║         ║     ║   ║        ║         ╠╣      ║');
+    writeln('║     ║    ╚  ║  ║         ╚  ╔  ╗  ╝      ║         ║          ║   ║    ║        ║         ╚╝      ║');
+    writeln('║     ╚     ╚═╝  ╚══════    ╚═    ═╝       ╚══════╝  ╚══════     ╚═╝     ╚══════  ╚══════╝  ╚╝      ║');
+    writeln('╚═══════════════════════════════════════════════════════════════════════════════════════════════════╝');
     Sleep(1500);
     ClearScreen;
 end;
@@ -138,10 +139,12 @@ end;
 
 function SetDifficultyLevel;
 var
-    inputLvl: string;
+    inputDifLvl: string;
     repeatInputFlag: boolean;
+    difLvl: integer;
 begin
     repeatInputFlag := false;
+    difLvl := 0;
     repeat
         ClearScreen();
         if repeatInputFlag then
@@ -153,17 +156,18 @@ begin
         writeln('Введите число для выбора уровня сложности игры: ');
         writeln('1. Нормальный');
         writeln('2. Ты не пройдешь!');
-        readln(inputLvl);
+        readln(inputDifLvl);
         // Compare in ASCII code to prevent from text input and errors linked with this fact
-        if (Length(inputLvl) = 1) and
-          ((Ord(inputLvl[1]) = 49) or (Ord(inputLvl[1]) = 50)) then
+        if (Length(inputDifLvl) = 1) and
+          ((Ord(inputDifLvl[1]) = 49) or (Ord(inputDifLvl[1]) = 50)) then
         begin
-            Result := StrToInt(inputLvl);
+            difLvl := StrToInt(inputDifLvl);
             repeatInputFlag := false;
         end
         else
             repeatInputFlag := True;
     until not repeatInputFlag;
+    Result := difLvl;
 end;
 
 procedure DeleteOneLine;
@@ -471,19 +475,19 @@ begin
             begin
                 ColourOneLine(-1, INCORRECT_COLOR);
                 counter := 0;
-                writeln('| = = = = = = = = = = = = = = = = = |');
-                writeln('|  Прогресс: ', counter:3, ' из 3.              |');
+                writeln('╔═════════════════════════════════════╗');
+                writeln('║  Прогресс: ', counter:1, ' из 3.                  ║');
             end
             else
             begin
                 ColourOneLine(-1, CORRECT_COLOR);
                 inc(counter);
-                writeln('| = = = = = = = = = = = = = = = = = |');
-                writeln('|  Прогресс: ', counter:3, ' из 3.              |');
+                writeln('╔═════════════════════════════════════╗');
+                writeln('║  Прогресс: ', counter:1, ' из 3.                  ║');
             end;
 
-            writeln('|  Нажмите Enter, чтобы продолжить. |');
-            writeln('| = = = = = = = = = = = = = = = = = |');
+            writeln('║  Нажмите Enter, чтобы продолжить.   ║');
+            writeln('╚═════════════════════════════════════╝');
             readln;
             ClearScreen(True);
         end;
@@ -568,19 +572,19 @@ begin
             begin
                 ColourOneLine(-1, INCORRECT_COLOR);
                 counter := 0;
-                writeln('| = = = = = = = = = = = = = = = = = |');
-                writeln('|  Прогресс: ', counter:3, ' из 3.              |');
+                writeln('╔═════════════════════════════════════╗');
+                writeln('║  Прогресс: ', counter:1, ' из 3.                  ║');
             end
             else
             begin
                 ColourOneLine(-1, CORRECT_COLOR);
                 inc(counter);
-                writeln('| = = = = = = = = = = = = = = = = = |');
-                writeln('|  Прогресс: ', counter:3, ' из 3.              |');
+                writeln('╔═════════════════════════════════════╗');
+                writeln('║  Прогресс: ', counter:1, ' из 3.                  ║');
             end;
 
-            writeln('|  Нажмите Enter, чтобы продолжить. |');
-            writeln('| = = = = = = = = = = = = = = = = = |');
+            writeln('║  Нажмите Enter, чтобы продолжить.   ║');
+            writeln('╚═════════════════════════════════════╝');
             readln;
             ClearScreen(True);
         end;
@@ -664,19 +668,19 @@ begin
             begin
                 ColourOneLine(-1, INCORRECT_COLOR);
                 counter := 0;
-                writeln('| = = = = = = = = = = = = = = = = = |');
-                writeln('|  Прогресс: ', counter:3, ' из 3.              |');
+                writeln('╔═════════════════════════════════════╗');
+                writeln('║  Прогресс: ', counter:1, ' из 3.                  ║');
             end
             else
             begin
                 ColourOneLine(-1, CORRECT_COLOR);
                 inc(counter);
-                writeln('| = = = = = = = = = = = = = = = = = |');
-                writeln('|  Прогресс: ', counter:3, ' из 3.              |');
+                writeln('╔═════════════════════════════════════╗');
+                writeln('║  Прогресс: ', counter:1, ' из 3.                  ║');
             end;
 
-            writeln('|  Нажмите Enter, чтобы продолжить. |');
-            writeln('| = = = = = = = = = = = = = = = = = |');
+            writeln('║  Нажмите Enter, чтобы продолжить.   ║');
+            writeln('╚═════════════════════════════════════╝');
             readln;
             ClearScreen(True);
         end;
@@ -761,19 +765,19 @@ begin
             begin
                 ColourOneLine(-1, INCORRECT_COLOR);
                 counter := 0;
-                writeln('| = = = = = = = = = = = = = = = = = |');
-                writeln('|  Прогресс: ', counter:3, ' из 3.              |');
+                writeln('╔═════════════════════════════════════╗');
+                writeln('║  Прогресс: ', counter:1, ' из 3.                  ║');
             end
             else
             begin
                 ColourOneLine(-1, CORRECT_COLOR);
                 inc(counter);
-                writeln('| = = = = = = = = = = = = = = = = = |');
-                writeln('|  Прогресс: ', counter:3, ' из 3.              |');
+                writeln('╔═════════════════════════════════════╗');
+                writeln('║  Прогресс: ', counter:1, ' из 3.                  ║');
             end;
 
-            writeln('|  Нажмите Enter, чтобы продолжить. |');
-            writeln('| = = = = = = = = = = = = = = = = = |');
+            writeln('║  Нажмите Enter, чтобы продолжить.   ║');
+            writeln('╚═════════════════════════════════════╝');
             readln;
             ClearScreen(True);
         end;
@@ -858,19 +862,19 @@ begin
             begin
                 ColourOneLine(-1, INCORRECT_COLOR);
                 counter := 0;
-                writeln('| = = = = = = = = = = = = = = = = = |');
-                writeln('|  Прогресс: ', counter:3, ' из 3.              |');
+                writeln('╔═════════════════════════════════════╗');
+                writeln('║  Прогресс: ', counter:1, ' из 3.                  ║');
             end
             else
             begin
                 ColourOneLine(-1, CORRECT_COLOR);
                 inc(counter);
-                writeln('| = = = = = = = = = = = = = = = = = |');
-                writeln('|  Прогресс: ', counter:3, ' из 3.              |');
+                writeln('╔═════════════════════════════════════╗');
+                writeln('║  Прогресс: ', counter:1, ' из 3.                  ║');
             end;
 
-            writeln('|  Нажмите Enter, чтобы продолжить. |');
-            writeln('| = = = = = = = = = = = = = = = = = |');
+            writeln('║  Нажмите Enter, чтобы продолжить.   ║');
+            writeln('╚═════════════════════════════════════╝');
             readln;
             ClearScreen(True);
         end;
