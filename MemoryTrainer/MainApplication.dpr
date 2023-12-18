@@ -163,7 +163,7 @@ begin
         end
         else
             repeatInputFlag := True;
-    until (repeatInputFlag = false);
+    until not repeatInputFlag;
 end;
 
 procedure DeleteOneLine;
@@ -691,103 +691,6 @@ begin
     ClearScreen(false);
 end;
 
-procedure Stage5;
-var
-    level, counter, maxLevel, sleepTime: integer;
-    showLevelDecrease: integer;
-    inputStr: string;
-    stageArr: TSetOfWords;
-begin
-    inputStr := '';
-    if difficulty = 1 then
-    begin
-        showLevelDecrease := 0;
-        level := 1;
-        maxLevel := 2;
-        sleepTime := 5000;
-    end
-    else
-    begin
-        showLevelDecrease := 2;
-        level := 3;
-        maxLevel := 4;
-        sleepTime := 4000;
-    end;
-
-    while level <= maxLevel do
-    begin
-        counter := 0;
-        writeln('<<<< Этап 5. Уровень: ', level - showLevelDecrease, ' >>>>');
-
-        while counter < 3 do
-        begin
-            stageArr := RandomArr(words, level + 4);
-
-            SwitchConsoleMode;
-            write(stageArr[1]);
-            for var i := 2 to level + 4 do
-                write(' ', stageArr[i]);
-            writeln;
-            Sleep(sleepTime);
-            ClearScreen(True);
-            SwitchConsoleMode;
-
-            writeln('Введите перевёрнутые словa в любом порядке:');
-
-            repeat
-                readln(inputStr);
-                TrimString(inputStr);
-                inputStr := AnsiUpperCase(inputStr);
-                DeleteOneLine(0);
-                case IsValid(inputStr) of
-                    $01:
-                        begin
-                            writeln('Пустая строка. Повторите ввод.');
-                            ColourOneLine(-1, WARNING_COLOR);
-                            DeleteOneLine(-2);
-                            MoveCursor(-2);
-                        end;
-                    $10:
-                        begin
-                            writeln('Неправильный язык. Повторите ввод.');
-                            ColourOneLine(-1, WARNING_COLOR);
-                            DeleteOneLine(-2);
-                            MoveCursor(-2);
-                        end;
-                end;
-            until IsValid(inputStr) = $00;
-
-            if IsValidS5(stageArr, level + 4, inputStr) = false then
-            begin
-                ColourOneLine(-1, INCORRECT_COLOR);
-                counter := 0;
-                writeln('| = = = = = = = = = = = = = = = = = |');
-                writeln('|  Прогресс: ', counter:3, ' из 3.              |');
-            end
-            else
-            begin
-                ColourOneLine(-1, CORRECT_COLOR);
-                inc(counter);
-                writeln('| = = = = = = = = = = = = = = = = = |');
-                writeln('|  Прогресс: ', counter:3, ' из 3.              |');
-            end;
-
-            writeln('|  Нажмите Enter, чтобы продолжить. |');
-            writeln('| = = = = = = = = = = = = = = = = = |');
-            readln;
-            ClearScreen(True);
-        end;
-
-        inc(level);
-        NewLevelAnimation;
-    end;
-
-    writeln('Вы прошли Этап 5! Поздравляем!');
-    writeln('Нажмите Enter, чтобы перейти к следующему этапу.');
-    readln;
-    ClearScreen(false);
-end;
-
 procedure Stage4;
 var
     level, counter, maxLevel, sleepTime: integer;
@@ -880,6 +783,103 @@ begin
     end;
 
     writeln('Вы прошли Этап 4! Поздравляем!');
+    writeln('Нажмите Enter, чтобы перейти к следующему этапу.');
+    readln;
+    ClearScreen(false);
+end;
+
+procedure Stage5;
+var
+    level, counter, maxLevel, sleepTime: integer;
+    showLevelDecrease: integer;
+    inputStr: string;
+    stageArr: TSetOfWords;
+begin
+    inputStr := '';
+    if difficulty = 1 then
+    begin
+        showLevelDecrease := 0;
+        level := 1;
+        maxLevel := 2;
+        sleepTime := 5000;
+    end
+    else
+    begin
+        showLevelDecrease := 2;
+        level := 3;
+        maxLevel := 4;
+        sleepTime := 4000;
+    end;
+
+    while level <= maxLevel do
+    begin
+        counter := 0;
+        writeln('<<<< Этап 5. Уровень: ', level - showLevelDecrease, ' >>>>');
+
+        while counter < 3 do
+        begin
+            stageArr := RandomArr(words, level + 4);
+
+            SwitchConsoleMode;
+            write(stageArr[1]);
+            for var i := 2 to level + 4 do
+                write(' ', stageArr[i]);
+            writeln;
+            Sleep(sleepTime);
+            ClearScreen(True);
+            SwitchConsoleMode;
+
+            writeln('Введите перевёрнутые словa в любом порядке:');
+
+            repeat
+                readln(inputStr);
+                TrimString(inputStr);
+                inputStr := AnsiUpperCase(inputStr);
+                DeleteOneLine(0);
+                case IsValid(inputStr) of
+                    $01:
+                        begin
+                            writeln('Пустая строка. Повторите ввод.');
+                            ColourOneLine(-1, WARNING_COLOR);
+                            DeleteOneLine(-2);
+                            MoveCursor(-2);
+                        end;
+                    $10:
+                        begin
+                            writeln('Неправильный язык. Повторите ввод.');
+                            ColourOneLine(-1, WARNING_COLOR);
+                            DeleteOneLine(-2);
+                            MoveCursor(-2);
+                        end;
+                end;
+            until IsValid(inputStr) = $00;
+
+            if IsValidS5(stageArr, level + 4, inputStr) = false then
+            begin
+                ColourOneLine(-1, INCORRECT_COLOR);
+                counter := 0;
+                writeln('| = = = = = = = = = = = = = = = = = |');
+                writeln('|  Прогресс: ', counter:3, ' из 3.              |');
+            end
+            else
+            begin
+                ColourOneLine(-1, CORRECT_COLOR);
+                inc(counter);
+                writeln('| = = = = = = = = = = = = = = = = = |');
+                writeln('|  Прогресс: ', counter:3, ' из 3.              |');
+            end;
+
+            writeln('|  Нажмите Enter, чтобы продолжить. |');
+            writeln('| = = = = = = = = = = = = = = = = = |');
+            readln;
+            ClearScreen(True);
+        end;
+
+        inc(level);
+        NewLevelAnimation;
+    end;
+
+    writeln('Вы прошли Этап 5! Поздравляем!');
     writeln('Нажмите Enter, чтобы перейти к следующему этапу.');
     readln;
     ClearScreen(false);
