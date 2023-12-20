@@ -24,7 +24,7 @@ type
 procedure ColourOneLine(relPosition: integer; colour: LongWord); forward;
 procedure ClearScreen(keepFirstLine: boolean = false); forward;
 procedure DeleteOneLine(relPosition: integer); forward;
-procedure MoveCursor(relPosition: integer); forward;
+procedure MoveCursor(relPositionY: integer = 0; relPositionX: integer = 8); forward;
 procedure SwitchConsoleMode; forward;
 procedure NewLevelAnimation; forward;
 // work with files functions and procedures
@@ -96,14 +96,14 @@ end;
 procedure NewLevelAnimation;
 begin
     ClearScreen;
-    writeln('╔═══════════════════════════════════════════════════════════════════════════════════════════════════╗');
-    writeln('║     ╔═      ╗  ╔══════  ╔          ╗     ╗         ╔══════  ╔       ╗  ╔══════  ╗        ╔╦╦╗     ║');
-    writeln('║     ║ ╚     ║  ║        ║          ║     ║         ║        ║       ║  ║        ║        ╠╬╬╣     ║');
-    writeln('║     ║  ╚    ║  ╠═════   ╚          ╝     ║         ╠═════   ╚       ╝  ╠═════   ║        ╠╬╬╣     ║');
-    writeln('║     ║   ╚   ║  ║         ║   ╔╗   ║      ║         ║         ║     ║   ║        ║         ╠╣      ║');
-    writeln('║     ║    ╚  ║  ║         ╚  ╔  ╗  ╝      ║         ║          ║   ║    ║        ║         ╚╝      ║');
-    writeln('║     ╚     ╚═╝  ╚══════    ╚═    ═╝       ╚══════╝  ╚══════     ╚═╝     ╚══════  ╚══════╝  ╚╝      ║');
-    writeln('╚═══════════════════════════════════════════════════════════════════════════════════════════════════╝');
+    writeln(#9'╔═══════════════════════════════════════════════════════════════════════════════════════════════════╗');
+    writeln(#9'║     ╔═      ╗  ╔══════  ╔          ╗     ╗         ╔══════  ╔       ╗  ╔══════  ╗        ╔╦╦╗     ║');
+    writeln(#9'║     ║ ╚     ║  ║        ║          ║     ║         ║        ║       ║  ║        ║        ╠╬╬╣     ║');
+    writeln(#9'║     ║  ╚    ║  ╠═════   ╚          ╝     ║         ╠═════   ╚       ╝  ╠═════   ║        ╠╬╬╣     ║');
+    writeln(#9'║     ║   ╚   ║  ║         ║   ╔╗   ║      ║         ║         ║     ║   ║        ║         ╠╣      ║');
+    writeln(#9'║     ║    ╚  ║  ║         ╚  ╔  ╗  ╝      ║         ║          ║   ║    ║        ║         ╚╝      ║');
+    writeln(#9'║     ╚     ╚═╝  ╚══════    ╚═    ═╝       ╚══════╝  ╚══════     ╚═╝     ╚══════  ╚══════╝  ╚╝      ║');
+    writeln(#9'╚═══════════════════════════════════════════════════════════════════════════════════════════════════╝');
     Sleep(1500);
     ClearScreen;
 end;
@@ -135,39 +135,6 @@ begin
     FillConsoleOutputAttribute(hStdOut, ScreenBufferInfo.wAttributes,
       ConsoleSize, Origin, NumWritten);
     SetConsoleCursorPosition(hStdOut, Origin);
-end;
-
-function SetDifficultyLevel;
-var
-    inputDifLvl: string;
-    repeatInputFlag: boolean;
-    difLvl: integer;
-begin
-    repeatInputFlag := false;
-    difLvl := 0;
-    repeat
-        ClearScreen();
-        if repeatInputFlag then
-        begin
-            writeln('Введен несуществующий уровень сложности! Попробуйте еще раз.');
-            ColourOneLine(-1, INCORRECT_COLOR);
-        end;
-
-        writeln('Введите число для выбора уровня сложности игры: ');
-        writeln('1. Нормальный');
-        writeln('2. Ты не пройдешь!');
-        readln(inputDifLvl);
-        // Compare in ASCII code to prevent from text input and errors linked with this fact
-        if (Length(inputDifLvl) = 1) and
-          ((Ord(inputDifLvl[1]) = 49) or (Ord(inputDifLvl[1]) = 50)) then
-        begin
-            difLvl := StrToInt(inputDifLvl);
-            repeatInputFlag := false;
-        end
-        else
-            repeatInputFlag := True;
-    until not repeatInputFlag;
-    Result := difLvl;
 end;
 
 procedure DeleteOneLine;
@@ -202,8 +169,8 @@ begin
     hStdOut := GetStdHandle(STD_OUTPUT_HANDLE);
     GetConsoleScreenBufferInfo(hStdOut, ScreenBufferInfo);
 
-    Origin.x := 0;
-    Origin.y := ScreenBufferInfo.dwCursorPosition.y + relPosition;
+    Origin.x := relPositionX;
+    Origin.y := ScreenBufferInfo.dwCursorPosition.y + relPositionY;
 
     SetConsoleCursorPosition(hStdOut, Origin);
 end;
@@ -261,6 +228,40 @@ begin
     str := Trim(str);
     while Pos(doubleSpace, str) <> 0 do
         Delete(str, Pos(doubleSpace, str), 1);
+end;
+
+function SetDifficultyLevel;
+var
+    inputDifLvl: string;
+    repeatInputFlag: boolean;
+    difLvl: integer;
+begin
+    repeatInputFlag := false;
+    difLvl := 0;
+    repeat
+        ClearScreen();
+        if repeatInputFlag then
+        begin
+            writeln(#9'Введен несуществующий уровень сложности! Попробуйте еще раз.');
+            ColourOneLine(-1, INCORRECT_COLOR);
+        end;
+
+        writeln(#9'Введите число для выбора уровня сложности игры: ');
+        writeln(#9'1. Нормальный');
+        writeln(#9'2. Ты не пройдешь!');
+        MoveCursor;
+        readln(inputDifLvl);
+        // Compare in ASCII code to prevent from text input and errors linked with this fact
+        if (Length(inputDifLvl) = 1) and
+          ((Ord(inputDifLvl[1]) = 49) or (Ord(inputDifLvl[1]) = 50)) then
+        begin
+            difLvl := StrToInt(inputDifLvl);
+            repeatInputFlag := false;
+        end
+        else
+            repeatInputFlag := True;
+    until not repeatInputFlag;
+    Result := difLvl;
 end;
 
 function IsValid;
@@ -339,6 +340,10 @@ begin
             Delete(userStr, Pos(checkWord, userStr), Length(checkWord) - 1);
         inc(i);
     end;
+
+    if Length(Trim(userStr)) <> 0 then
+        flag := False;
+
     Result := flag;
 end;
 
@@ -404,8 +409,11 @@ begin
             Delete(userStr, Pos(checkWord, userStr), Length(checkWord) - 1);
         inc(i);
     end;
-    Result := flag;
 
+    if Length(Trim(userStr)) <> 0 then
+        flag := False;
+
+    Result := flag;
 end;
 
 procedure Stage1;
@@ -434,19 +442,22 @@ begin
     while level <= maxLevel do
     begin
         counter := 0;
-        writeln('<<<< Этап 1. Уровень: ', level - showLevelDecrease, ' >>>>');
+        writeln(#9'<<<< Этап 1. Уровень: ', level - showLevelDecrease, ' >>>>');
 
         while counter < 3 do
         begin
             stageStr := words[level][random(Length(words[level]))];
 
             SwitchConsoleMode;
+            MoveCursor;
             writeln(stageStr);
+            MoveCursor;
             Sleep(sleepTime);
             ClearScreen(True);
             SwitchConsoleMode;
 
-            writeln('Введите перевёрнутое слово:');
+            writeln(#9'Введите перевёрнутое слово:');
+            MoveCursor;
 
             repeat
                 readln(inputStr);
@@ -456,14 +467,14 @@ begin
                 case IsValid(inputStr) of
                     $01:
                         begin
-                            writeln('Пустая строка. Повторите ввод.');
+                            writeln(#9'Пустая строка. Повторите ввод.');
                             ColourOneLine(-1, WARNING_COLOR);
                             DeleteOneLine(-2);
                             MoveCursor(-2);
                         end;
                     $10:
                         begin
-                            writeln('Неправильный язык. Повторите ввод.');
+                            writeln(#9'Неправильный язык. Повторите ввод.');
                             ColourOneLine(-1, WARNING_COLOR);
                             DeleteOneLine(-2);
                             MoveCursor(-2);
@@ -475,19 +486,20 @@ begin
             begin
                 ColourOneLine(-1, INCORRECT_COLOR);
                 counter := 0;
-                writeln('╔═════════════════════════════════════╗');
-                writeln('║  Прогресс: ', counter:1, ' из 3.                  ║');
+                writeln(#9'╔═════════════════════════════════════╗');
+                writeln(#9'║  Прогресс: ', counter:1, ' из 3.                  ║');
             end
             else
             begin
                 ColourOneLine(-1, CORRECT_COLOR);
                 inc(counter);
-                writeln('╔═════════════════════════════════════╗');
-                writeln('║  Прогресс: ', counter:1, ' из 3.                  ║');
+                writeln(#9'╔═════════════════════════════════════╗');
+                writeln(#9'║  Прогресс: ', counter:1, ' из 3.                  ║');
             end;
 
-            writeln('║  Нажмите Enter, чтобы продолжить.   ║');
-            writeln('╚═════════════════════════════════════╝');
+            writeln(#9'║  Нажмите Enter, чтобы продолжить.   ║');
+            writeln(#9'╚═════════════════════════════════════╝');
+            MoveCursor;
             readln;
             ClearScreen(True);
         end;
@@ -496,8 +508,9 @@ begin
         NewLevelAnimation;
     end;
 
-    writeln('Вы прошли Этап 1! Поздравляем!');
-    writeln('Нажмите Enter, чтобы перейти к следующему этапу.');
+    writeln(#9'Вы прошли Этап 1! Поздравляем!');
+    writeln(#9'Нажмите Enter, чтобы перейти к следующему этапу.');
+    MoveCursor;
     readln;
     ClearScreen(false);
 end;
@@ -528,22 +541,25 @@ begin
     while level <= maxLevel do
     begin
         counter := 0;
-        writeln('<<<< Этап 2. Уровень: ', level - showLevelDecrease, ' >>>>');
+        writeln(#9'<<<< Этап 2. Уровень: ', level - showLevelDecrease, ' >>>>');
 
         while counter < 3 do
         begin
             stageArr := RandomArr(words, level + 4);
 
             SwitchConsoleMode;
+            MoveCursor;
             write(stageArr[1]);
             for var i := 2 to level + 4 do
                 write(' ', stageArr[i]);
             writeln;
+            MoveCursor;
             Sleep(sleepTime);
             ClearScreen(True);
             SwitchConsoleMode;
 
-            writeln('Введите словa в любом порядке:');
+            writeln(#9'Введите словa в любом порядке:');
+            MoveCursor;
 
             repeat
                 readln(inputStr);
@@ -553,14 +569,14 @@ begin
                 case IsValid(inputStr) of
                     $01:
                         begin
-                            writeln('Пустая строка. Повторите ввод.');
+                            writeln(#9'Пустая строка. Повторите ввод.');
                             ColourOneLine(-1, WARNING_COLOR);
                             DeleteOneLine(-2);
                             MoveCursor(-2);
                         end;
                     $10:
                         begin
-                            writeln('Неправильный язык. Повторите ввод.');
+                            writeln(#9'Неправильный язык. Повторите ввод.');
                             ColourOneLine(-1, WARNING_COLOR);
                             DeleteOneLine(-2);
                             MoveCursor(-2);
@@ -572,19 +588,20 @@ begin
             begin
                 ColourOneLine(-1, INCORRECT_COLOR);
                 counter := 0;
-                writeln('╔═════════════════════════════════════╗');
-                writeln('║  Прогресс: ', counter:1, ' из 3.                  ║');
+                writeln(#9'╔═════════════════════════════════════╗');
+                writeln(#9'║  Прогресс: ', counter:1, ' из 3.                  ║');
             end
             else
             begin
                 ColourOneLine(-1, CORRECT_COLOR);
                 inc(counter);
-                writeln('╔═════════════════════════════════════╗');
-                writeln('║  Прогресс: ', counter:1, ' из 3.                  ║');
+                writeln(#9'╔═════════════════════════════════════╗');
+                writeln(#9'║  Прогресс: ', counter:1, ' из 3.                  ║');
             end;
 
-            writeln('║  Нажмите Enter, чтобы продолжить.   ║');
-            writeln('╚═════════════════════════════════════╝');
+            writeln(#9'║  Нажмите Enter, чтобы продолжить.   ║');
+            writeln(#9'╚═════════════════════════════════════╝');
+            MoveCursor;
             readln;
             ClearScreen(True);
         end;
@@ -593,8 +610,9 @@ begin
         NewLevelAnimation;
     end;
 
-    writeln('Вы прошли Этап 2! Поздравляем!');
-    writeln('Нажмите Enter, чтобы перейти к следующему этапу.');
+    writeln(#9'Вы прошли Этап 2! Поздравляем!');
+    writeln(#9'Нажмите Enter, чтобы перейти к следующему этапу.');
+    MoveCursor;
     readln;
     ClearScreen(false);
 end;
@@ -624,22 +642,25 @@ begin
     while level <= maxLevel do
     begin
         counter := 0;
-        writeln('<<<< Этап 3. Уровень: ', level - showLevelDecrease, ' >>>>');
+        writeln(#9'<<<< Этап 3. Уровень: ', level - showLevelDecrease, ' >>>>');
 
         while counter < 3 do
         begin
             stageArr := RandomArr(words, level + 4);
 
             SwitchConsoleMode;
+            MoveCursor;
             write(stageArr[1]);
             for var i := 2 to level + 4 do
                 write(' ', stageArr[i]);
             writeln;
+            MoveCursor;
             Sleep(sleepTime);
             ClearScreen(True);
             SwitchConsoleMode;
 
-            writeln('Введите словa в строгом порядке:');
+            writeln(#9'Введите словa в строгом порядке:');
+            MoveCursor;
 
             repeat
                 readln(inputStr);
@@ -649,14 +670,14 @@ begin
                 case IsValid(inputStr) of
                     $01:
                         begin
-                            writeln('Пустая строка. Повторите ввод.');
+                            writeln(#9'Пустая строка. Повторите ввод.');
                             ColourOneLine(-1, WARNING_COLOR);
                             DeleteOneLine(-2);
                             MoveCursor(-2);
                         end;
                     $10:
                         begin
-                            writeln('Неправильный язык. Повторите ввод.');
+                            writeln(#9'Неправильный язык. Повторите ввод.');
                             ColourOneLine(-1, WARNING_COLOR);
                             DeleteOneLine(-2);
                             MoveCursor(-2);
@@ -668,19 +689,20 @@ begin
             begin
                 ColourOneLine(-1, INCORRECT_COLOR);
                 counter := 0;
-                writeln('╔═════════════════════════════════════╗');
-                writeln('║  Прогресс: ', counter:1, ' из 3.                  ║');
+                writeln(#9'╔═════════════════════════════════════╗');
+                writeln(#9'║  Прогресс: ', counter:1, ' из 3.                  ║');
             end
             else
             begin
                 ColourOneLine(-1, CORRECT_COLOR);
                 inc(counter);
-                writeln('╔═════════════════════════════════════╗');
-                writeln('║  Прогресс: ', counter:1, ' из 3.                  ║');
+                writeln(#9'╔═════════════════════════════════════╗');
+                writeln(#9'║  Прогресс: ', counter:1, ' из 3.                  ║');
             end;
 
-            writeln('║  Нажмите Enter, чтобы продолжить.   ║');
-            writeln('╚═════════════════════════════════════╝');
+            writeln(#9'║  Нажмите Enter, чтобы продолжить.   ║');
+            writeln(#9'╚═════════════════════════════════════╝');
+            MoveCursor;
             readln;
             ClearScreen(True);
         end;
@@ -689,8 +711,9 @@ begin
         NewLevelAnimation;
     end;
 
-    writeln('Вы прошли Этап 3! Поздравляем!');
-    writeln('Нажмите Enter, чтобы перейти к следующему этапу.');
+    writeln(#9'Вы прошли Этап 3! Поздравляем!');
+    writeln(#9'Нажмите Enter, чтобы перейти к следующему этапу.');
+    MoveCursor;
     readln;
     ClearScreen(false);
 end;
@@ -721,22 +744,25 @@ begin
     while level <= maxLevel do
     begin
         counter := 0;
-        writeln('<<<< Этап 4. Уровень: ', level - showLevelDecrease, ' >>>>');
+        writeln(#9'<<<< Этап 4. Уровень: ', level - showLevelDecrease, ' >>>>');
 
         while counter < 3 do
         begin
             stageArr := RandomArr(words, level + 4);
 
             SwitchConsoleMode;
+            MoveCursor;
             write(stageArr[1]);
             for var i := 2 to level + 4 do
                 write(' ', stageArr[i]);
             writeln;
+            MoveCursor;
             Sleep(sleepTime);
             ClearScreen(True);
             SwitchConsoleMode;
 
-            writeln('Введите предложение в обратном порядке:');
+            writeln(#9'Введите предложение в обратном порядке:');
+            MoveCursor;
 
             repeat
                 readln(inputStr);
@@ -746,14 +772,14 @@ begin
                 case IsValid(inputStr) of
                     $01:
                         begin
-                            writeln('Пустая строка. Повторите ввод.');
+                            writeln(#9'Пустая строка. Повторите ввод.');
                             ColourOneLine(-1, WARNING_COLOR);
                             DeleteOneLine(-2);
                             MoveCursor(-2);
                         end;
                     $10:
                         begin
-                            writeln('Неправильный язык. Повторите ввод.');
+                            writeln(#9'Неправильный язык. Повторите ввод.');
                             ColourOneLine(-1, WARNING_COLOR);
                             DeleteOneLine(-2);
                             MoveCursor(-2);
@@ -765,19 +791,20 @@ begin
             begin
                 ColourOneLine(-1, INCORRECT_COLOR);
                 counter := 0;
-                writeln('╔═════════════════════════════════════╗');
-                writeln('║  Прогресс: ', counter:1, ' из 3.                  ║');
+                writeln(#9'╔═════════════════════════════════════╗');
+                writeln(#9'║  Прогресс: ', counter:1, ' из 3.                  ║');
             end
             else
             begin
                 ColourOneLine(-1, CORRECT_COLOR);
                 inc(counter);
-                writeln('╔═════════════════════════════════════╗');
-                writeln('║  Прогресс: ', counter:1, ' из 3.                  ║');
+                writeln(#9'╔═════════════════════════════════════╗');
+                writeln(#9'║  Прогресс: ', counter:1, ' из 3.                  ║');
             end;
 
-            writeln('║  Нажмите Enter, чтобы продолжить.   ║');
-            writeln('╚═════════════════════════════════════╝');
+            writeln(#9'║  Нажмите Enter, чтобы продолжить.   ║');
+            writeln(#9'╚═════════════════════════════════════╝');
+            MoveCursor;
             readln;
             ClearScreen(True);
         end;
@@ -788,6 +815,7 @@ begin
 
     writeln('Вы прошли Этап 4! Поздравляем!');
     writeln('Нажмите Enter, чтобы перейти к следующему этапу.');
+    MoveCursor;
     readln;
     ClearScreen(false);
 end;
@@ -818,22 +846,25 @@ begin
     while level <= maxLevel do
     begin
         counter := 0;
-        writeln('<<<< Этап 5. Уровень: ', level - showLevelDecrease, ' >>>>');
+        writeln(#9'<<<< Этап 5. Уровень: ', level - showLevelDecrease, ' >>>>');
 
         while counter < 3 do
         begin
             stageArr := RandomArr(words, level + 4);
 
             SwitchConsoleMode;
+            MoveCursor;
             write(stageArr[1]);
             for var i := 2 to level + 4 do
                 write(' ', stageArr[i]);
             writeln;
+            MoveCursor;
             Sleep(sleepTime);
             ClearScreen(True);
             SwitchConsoleMode;
 
-            writeln('Введите перевёрнутые словa в любом порядке:');
+            writeln(#9'Введите перевёрнутые словa в любом порядке:');
+            MoveCursor;
 
             repeat
                 readln(inputStr);
@@ -843,14 +874,14 @@ begin
                 case IsValid(inputStr) of
                     $01:
                         begin
-                            writeln('Пустая строка. Повторите ввод.');
+                            writeln(#9'Пустая строка. Повторите ввод.');
                             ColourOneLine(-1, WARNING_COLOR);
                             DeleteOneLine(-2);
                             MoveCursor(-2);
                         end;
                     $10:
                         begin
-                            writeln('Неправильный язык. Повторите ввод.');
+                            writeln(#9'Неправильный язык. Повторите ввод.');
                             ColourOneLine(-1, WARNING_COLOR);
                             DeleteOneLine(-2);
                             MoveCursor(-2);
@@ -862,19 +893,20 @@ begin
             begin
                 ColourOneLine(-1, INCORRECT_COLOR);
                 counter := 0;
-                writeln('╔═════════════════════════════════════╗');
-                writeln('║  Прогресс: ', counter:1, ' из 3.                  ║');
+                writeln(#9'╔═════════════════════════════════════╗');
+                writeln(#9'║  Прогресс: ', counter:1, ' из 3.                  ║');
             end
             else
             begin
                 ColourOneLine(-1, CORRECT_COLOR);
                 inc(counter);
-                writeln('╔═════════════════════════════════════╗');
-                writeln('║  Прогресс: ', counter:1, ' из 3.                  ║');
+                writeln(#9'╔═════════════════════════════════════╗');
+                writeln(#9'║  Прогресс: ', counter:1, ' из 3.                  ║');
             end;
 
-            writeln('║  Нажмите Enter, чтобы продолжить.   ║');
-            writeln('╚═════════════════════════════════════╝');
+            writeln(#9'║  Нажмите Enter, чтобы продолжить.   ║');
+            writeln(#9'╚═════════════════════════════════════╝');
+            MoveCursor;
             readln;
             ClearScreen(True);
         end;
@@ -883,8 +915,9 @@ begin
         NewLevelAnimation;
     end;
 
-    writeln('Вы прошли Этап 5! Поздравляем!');
-    writeln('Нажмите Enter, чтобы перейти к следующему этапу.');
+    writeln(#9'Вы прошли Этап 5! Поздравляем!');
+    writeln(#9'Нажмите Enter, чтобы перейти к следующему этапу.');
+    MoveCursor;
     readln;
     ClearScreen(false);
 end;
@@ -894,8 +927,9 @@ var
     words: TDictionary;
     difficulty: integer;
 begin
-    writeln('Добро пожаловать в приложение Memory Trainer!');
-    writeln('Нажмите Enter, чтобы начать.');
+    writeln(#9'Добро пожаловать в приложение Memory Trainer!');
+    writeln(#9'Нажмите Enter, чтобы начать.');
+    MoveCursor;
     readln;
     difficulty := SetDifficultyLevel;
     ClearScreen(false);
@@ -905,8 +939,8 @@ begin
     Stage3(words, difficulty);
     Stage4(words, difficulty);
     Stage5(words, difficulty);
-    writeln('Спасибо, что воспользовались нашим приложением!');
-    writeln('Нажмите Enter, чтобы выйти.');
+    writeln(#9'Спасибо, что воспользовались нашим приложением!');
+    writeln(#9'Нажмите Enter, чтобы выйти.');
     readln;
 end;
 
